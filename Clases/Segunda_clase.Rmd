@@ -1,0 +1,300 @@
+---
+title: "segunda_clase"
+author: "Jose Manuel Pinzon"
+date: "13/9/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Operadores relacionales / operadores logicos.
+
+```{r}
+#Mayor que
+5>3
+1>4
+#Menor que
+5<10
+5<3
+# Mayor o igual que
+10>=11
+#menor o igual que
+10<=5
+#Exactamente igual que 
+9==9
+#Es diferente a 
+5 != 3
+
+#Operador & (Y)
+
+5 > 3 & 5 < 6
+5 > 6 & 5 < 7
+
+#Operador | (O)
+5 > 6 | 5 < 7
+
+
+```
+
+
+### Creacion de vectores.
+
+$$ Vector1 = (1,2,3,4,5,6) $$
+
+$$ Vector2 = (arbol, casa, persona)$$
+
+
+
+```{r}
+X <- c(1,2,3,4,5,6)
+Y <- c("arbol","casa","persona")
+
+X
+Y
+```
+
+```{r}
+#Creacion de cadenas
+1:10
+10:1
+-43:-30
+
+seq(1,4, len = 20)
+
+a <- seq(1,4, len = 20)
+round(a,2)
+a <- round(a,2)
+a
+
+seq(1,4, by = 0.5)
+
+```
+
+
+# Operaciones con vectores
+```{r}
+mi_vector <- c(2,3,6,7,8,10,11)
+mi_vector
+
+P <- seq(1,4, len = 7)
+
+
+mi_vector + 2
+mi_vector * 3 
+
+mi_vector > 7
+
+#INDEXACION
+mi_vector[6]
+mi_vector[2] + 3
+
+```
+
+**Ejercicio:** Crear un vector que vaya desde -5 hasta 6 y que tenga 7 numeros. Luego de crear el objeto sumarlo con "mi_vector1" e imprima el resultado con maximo 3 decimales.
+
+Respuesta:
+
+$$Vector = (-3.000, -0.167,  4.667,  7.500, 10.333, 14.167, 17.000)$$
+
+```{r}
+mi_vector2 <- seq(-5,6, len = 7)
+mi_vector3 <- mi_vector2 + mi_vector
+round(mi_vector3,3)
+
+```
+
+
+### Matrices
+
+$$\mathbf{X} = \left[\begin{array}
+{rrr}
+1 & 4 & 7 & 10 \\
+2 & 5 & 8 & 11 \\
+3 & 6 & 9 & 12
+\end{array}\right]$$
+
+```{r}
+matrix(1:12, nrow = 3, ncol = 4)
+```
+
+$$\mathbf{X} = \left[\begin{array}
+{rrr}
+1 & 2 & 3 & 4 \\
+5 & 6 & 7 & 8 \\
+9 & 10 & 11 & 12
+\end{array}\right]$$
+
+```{r}
+matrix(1:12, nrow = 3, ncol = 4, byrow = TRUE)
+
+```
+
+
+
+```{r}
+vector_1 <- 1:4
+vector_2 <- 5:8
+vector_3 <- 9:12
+vector_4 <- 13:16
+
+#cbid(), para unir vectores usando cada uno de ellos como columnas
+matriz_v <- cbind(vector_1,vector_2,vector_3,vector_4)
+matriz_v
+
+#rbind(), para unir vectores usando cada uno de ellos como filas
+matriz_v2 <- rbind(vector_1,vector_2,vector_3,vector_4)
+matriz_v2
+
+```
+
+### INDEXACION
+
+```{r}
+index <- matrix(1:12, nrow = 3, ncol = 4)
+index
+index[1,3]
+index[3,2]
+```
+
+
+### Algebra lineal
+
+Ejercicio: Hacer las siguientes matrices.
+
+$$\mathbf{A} = \left[\begin{array}
+{rrr}
+1 & 4 \\
+2 & 5 \\
+3 & 6
+\end{array}\right]$$
+
+
+$$\mathbf{B} = \left[\begin{array}
+{rrr}
+1 & 2 \\
+3 & 4 \\
+5 & 6
+\end{array}\right]$$
+
+
+```{r}
+
+A <- matrix(1:6, nrow = 3, ncol = 2)
+A
+B <- matrix(1:6, nrow = 3, ncol = 2, byrow = TRUE)
+B
+
+class(A)
+class(B)
+```
+
+## Traspuesta
+
+```{r}
+At <- t(A)
+At
+```
+
+## Sumar matrices
+
+```{r}
+A+B
+A-B
+```
+
+## Multiplicacion de matrices
+
+```{r}
+#Multiplicacion escalada
+A
+C <- A*2
+C
+```
+
+```{r}
+## Multiplicacion de matrices   %*%
+
+B
+t(A)
+D <-t(A) %*% B
+D
+```
+
+
+## Data frame
+
+### Crear dataframes.
+
+```{r}
+entero <- c(1:7)
+decimal <- c(1.2,2.5,3.2,4.5,5.6,5,3.4)
+caracter <- c("Juan","Jose","Laura","Valentina","Valentina","Valentina", "Juana")
+
+mi_df <- data.frame(entero,decimal,caracter)
+
+class(mi_df)
+names(mi_df)
+head(mi_df,3)
+tail(mi_df,2)
+unique(mi_df$caracter)
+
+
+```
+
+### Modificar dataframes.
+
+```{r}
+
+Ciudades <- c("Bogota","Medellin","El cairo", "Cali", "caldas", "Pereira", "Zipaquira")
+Ciudades
+
+
+mi_df$CIUDADES <- Ciudades
+mi_df
+
+
+
+## Indexacion
+mi_df[1,3]
+mi_df[,4]
+mi_df[2,]
+
+mi_df[,-4] #Quitar columnas
+mi_df[-3,] #Quitar filas
+
+
+## Cambiar nombre de columnas
+
+names(mi_df) = c("Columna1","Columna2","Columna3","Columna4")
+mi_df
+
+names(mi_df)[1] = "Entero"
+mi_df
+
+```
+
+
+```{r}
+library(readr)
+
+full <- read.csv("https://covid.ourworldindata.org/data/ecdc/full_data.csv")
+
+pobl=read.csv("https://covid.ourworldindata.org/data/ecdc/locations.csv")
+
+COVID=merge(full,pobl, by="location")
+View(COVID)
+
+```
+
+### Caracteristicas
+
+```{r}
+class(COVID)
+str(COVID)
+names(COVID)
+head(COVID,5)
+tail(COVID,4)
+```
+
