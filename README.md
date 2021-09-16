@@ -43,7 +43,7 @@ Acá encontrará los códigos trabajados en el curso, a continuación verá una 
 | --- | --- |
 | Primera_clase| Tipos de datos, operaciones matematicas, Importar bases de datos|
 | Segunda_clase| Vectores, matrices, algebra lineal, dataframes  |
-| Tercera_clase| Manipulacion de datos y graficos con ggplot2 |
+| Tercera_clase| Manipulacion de datos y visualización de gráficos con ggplot2 |
 
 
 
