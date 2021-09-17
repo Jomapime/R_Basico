@@ -32,8 +32,8 @@ En el PDF "Colores en R", encontrarás los nombres de todos los colores que pued
 En esta sección se encuentran archivos PDF que pueden servir como guías o materiales de apoyo para los estudiantes.
 Acá encontrará las siguientes gúías
 
-1. **Instalación de R**.
-2. **Guia_Rmarkdown:** En esta guía se explica como crear archivos en rmarkdown (.Rmd) y como crear informes o documentos con esta herramienta. También encontrará algunos tips para dar formatos de texto en lenguaje markdown.
+1. **Guia_Rmarkdown:** En esta guía se explica como crear archivos en rmarkdown (.Rmd) y como crear informes o documentos con esta herramienta. También encontrará algunos tips para dar formatos de texto en lenguaje markdown.
+2. **Primeros_pasos:** En este archivo PDF se explican los aspectos básicos que se deben tener en cuenta a la hora de manerjar datos en R. Acá encontrará una guía para identificar los tipos de datos y estructuras de datos (Variables, Vectores, Matrices, DataFrame). Al final del documento encontrará algunos ejercicios para practicar lo aprendido.
 
 ### Carpeta codigos.
 
