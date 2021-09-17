@@ -1,0 +1,103 @@
+---
+title: "Guia Dplyr"
+author: "Jose Manuel Pinzon / Laboratorio Fintrade"
+date: "17/9/2021"
+output: pdf_document
+output: pdf_document
+lang: es-MX
+toc: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\pagebreak
+
+
+# Paquete Dplyr
+
+
+
+```{r}
+## Cargar bases de datos
+full <- read.csv("https://covid.ourworldindata.org/data/ecdc/full_data.csv")
+pobl=read.csv("https://covid.ourworldindata.org/data/ecdc/locations.csv")
+COVID=merge(full,pobl, by="location")
+
+```
+
+
+## Select
+
+
+```{r}
+base_1= COVID %>%
+  select(location,date,new_cases,new_deaths,total_cases,total_deaths,population)
+
+```
+
+
+
+## Distinct | Count
+
+
+```{r}
+distinct(COVID, continent)
+
+COVID %>%
+  distinct(continent)
+
+```
+
+
+
+
+## Count
+
+```{r}
+count(COVID, continent)
+
+```
+
+
+## Filter
+
+```{r}
+America= COVID %>%
+  filter(continent %in% c("North America", "South America")) %>%
+  select(location,date,new_cases,new_deaths,total_cases,total_deaths,population)
+
+
+```
+
+
+## Mutate
+
+```{r}
+COVID$date =as.Date(COVID$date)
+
+Agosto30 = COVID%>%
+  filter(date == "2020-08-30")%>%
+  mutate(CasosA30 = (new_cases/population)*100)%>%
+  select(location, CasosA30)
+
+COVID_Ultimo_dia = COVID %>%
+  filter(date == tail(COVID$date,1)) %>%
+  mutate(Porcent=total_deaths/population)
+
+```
+
+
+
+## group_by & summarize
+
+```{r}
+COVID %>%
+  group_by(continent) %>%
+  summarize(media_continente =mean(na.omit(new_cases)))
+
+```
+
+
+
