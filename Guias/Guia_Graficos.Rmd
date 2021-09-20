@@ -1,0 +1,70 @@
+---
+title: "Graficos basicos en R"
+author: "Jose Manuel Pinzon / Laboratorio Fintrade"
+date: "20/9/2021"
+output: pdf_document
+lang: es-MX
+toc: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\pagebreak
+
+Una de las grandes ventajas del Software R es la gran capacidad que tiene para la creación de gráficos, es un programa diseñado y empleado primordialmente para realizar análisis estadístico y construir gráficos tanto para datos cuantitativos como cualitativos. El objetivo de esta guía es dar una introducción a la creación de gráficos basicos y sencillos con Rbase.  
+
+Se explicará como crear y personalizar los siguientes tipos de gráficos:  
+
+1. Histogramas (Datos cuantitativos)
+2. Boxplot (Datos cuantitativos)
+3. Diagramas de barras (Datos cuantitativos)
+4. Diagramas de torta (Datos cuantitativos)
+5. Graficos de dispersión (Datos cuantitativos, mirar la relación de variables cuantitativas)
+
+## Base de datos.
+
+Para el desarrollo de esta guía se va a trabajar con la base de datos _wage2.xlsx_. Esta base de datos se encuentra en el repositorio de Github Fintrade2020. Para acceder ingrese al siguiente link <https://github.com/Fintrade2020/R_Basico>. Una vez haya ingresado a este link dirígase a la carpeta _clases_, allí encontrará el archivo, por favor descárguelo.
+
+Este archivo de excel cuenta con 935 observaciones y 12 variables, de las cuales 8 son cuantitativas y 4 son cualitativas.
+
+- **wage:**  Salario. (Variable cuantitativa)  
+- **hours:** Horas de trabajo a la semana. (Variable cuantitativa)  
+- **IQ:**    Puntaje IQ. (Variable cuantitativa)  
+- **KWW:**   Puntaje de conocimiento del area. (Variable cuantitativa)  
+- **educ:**  Años de estudio. (Variable cuantitativa)  
+- **exper:** Años de experiencia. (Variable cuantitativa)  
+- **tenure:** Años en el mismo trabajo. (Variable cuantitativa)   
+- **age:** Edad. (Variable cuantitativa)   
+- **married:** Estado civil. 1 - Casado. 0 - Soltero. (Variable cualitativa)  
+- **black_:** Color de piel. 1 - Negro. 0 - Blanco.
+- **south:** Lugar de residencia. 1 - Sur. 0 - Norte
+- **urban:** Lugar de residencia. 1 - Urbano. 0 - Rural.  
+
+### Cargar base de datos
+
+```{r, eval=FALSE}
+library(readxl)
+Wage2 <- read_excel("Clases/Wage2.xlsx") #Importar archivo.
+str(Wage2) #Caracteristicas del archivo.
+```
+
+Al cargar la base de datos, se puede evidenciar que las variables categóricas también están definidas como tipo numerico. A continuación se va a ajustar el tipo de dato a **Factor**
+
+```{r}
+Wage2$married <- as.factor(Wage2$married)
+Wage2$black <- as.factor(Wage2$black)
+Wage2$south <- as.factor(Wage2$south)
+Wage2$urban <- as.factor(Wage2$urban)
+
+str(Wage2)
+```
+
+
+## Histogramas.
+
+Los histogramas son gráficos que indican la frecuencia de los dedatos mediante una distribución de rangos. Este gráfico solo se puede realizar para variables cuantitativas, es decir, variables medibles, tales como el peso, la estatura, la edad, salario, etc.
+
+En R, estos histogramas son muy sencillos de hacer, un histograma básico se puede obtener empleando el comando **hist** de la siguiente manera.
+
