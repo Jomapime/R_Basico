@@ -138,12 +138,13 @@ dim(COVID)
 str(COVID)
 COVID$date =as.Date(COVID$date)
 
+
 ## MANIPULACION DE DATAFRAMES
+
 
 ## Libreria
 
 library(dplyr)
-glimpse(COVID)
 
 ### Select
 
@@ -169,7 +170,8 @@ COVID %>%
 
 count(COVID, continent)
 
-
+COVID %>%
+  count(continent)
 
 ### Filter
 
@@ -193,6 +195,12 @@ head(Mayores_o)
 #### PONER EJERCICIO ####
 
 
+### group_by & summarize
+
+COVID %>%
+  group_by(continent) %>%
+  summarize(media_continente =mean(na.omit(new_cases)))
+
 
 ### Mutate
 
@@ -207,15 +215,5 @@ Junio = COVID%>%
   filter(date == "2020-06-10")%>%
   mutate(Casos_may = (new_cases/total_cases)*100)%>%
   select(date, location, new_cases,total_cases, Casos_may)
+
 head(Junio)
-
-
-#### PONER EJERCICIO ####
-
-
-
-### group_by & summarize
-
-COVID %>%
-  group_by(continent) %>%
-  summarize(media_continente =mean(na.omit(new_cases)))
