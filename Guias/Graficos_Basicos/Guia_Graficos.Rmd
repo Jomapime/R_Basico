@@ -11,7 +11,9 @@ toc: TRUE
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 \pagebreak
+
 
 Una de las grandes ventajas del Software R es la gran capacidad que tiene para la creación de gráficos, es un programa diseñado y empleado primordialmente para realizar análisis estadístico y construir gráficos tanto para datos cuantitativos como cualitativos. El objetivo de esta guía es dar una introducción a la creación de gráficos basicos y sencillos con Rbase.  
 
@@ -44,9 +46,9 @@ Este archivo de excel cuenta con 935 observaciones y 12 variables, de las cuales
 
 ### Cargar base de datos
 
-```{r, eval=FALSE}
+```{r}
 library(readxl)
-Wage2 <- read_excel("Clases/Wage2.xlsx") #Importar archivo.
+Wage2 <- read_excel("Wage2.xlsx") ##Importar archivo.
 str(Wage2) #Caracteristicas del archivo.
 ```
 
@@ -57,14 +59,73 @@ Wage2$married <- as.factor(Wage2$married)
 Wage2$black <- as.factor(Wage2$black)
 Wage2$south <- as.factor(Wage2$south)
 Wage2$urban <- as.factor(Wage2$urban)
+str(Wage2) #Caracteristicas DF
+summary(Wage2) #Resumen DF
 
-str(Wage2)
 ```
 
+Por último se va a fijar la base de datos con el comando **attach**, con este comando se indica que todas las variables que se van a trabajar se encuentran en esta base de datos.
+
+```{r}
+attach(Wage2)
+```
+
+
+## Argumentos generales.
+
+Por lo general los graficos son muy sencillos de hacer, con el comando normal se obtiene un gráfico muy básico, sin embargo, estos comandos tienen argumentos con los cuales se pueden modificar algunas caracteristicas del gráfico. Algunos de esos argumentos son los siguientes:
+
+- **xlab:** Con este argumento se le puede asignar una titulo o nombre al eje X.
+- **ylab:** Con este argumento se le puede asignar una titulo o nombre al eje Y.
+- **main:** Permite cambiar el titulo del gráfico.
+- **col:** Este argumento permite poner colores en el gráfico.
+- **ylim:** Se usa para modiicar los limites o rangos del eje Y.
+- **ylim:** Se usa para modiicar los limites o rangos del eje X.
+
+Mas adelante los pondremos en practica.
 
 ## Histogramas.
 
 Los histogramas son gráficos que indican la frecuencia de los dedatos mediante una distribución de rangos. Este gráfico solo se puede realizar para variables cuantitativas, es decir, variables medibles, tales como el peso, la estatura, la edad, salario, etc.
 
 En R, estos histogramas son muy sencillos de hacer, un histograma básico se puede obtener empleando el comando **hist** de la siguiente manera.
+
+```{r,fig.width=3, fig.height=3}
+hist(IQ) #Histograma para la variable IQ
+
+```
+
+Para modificarlo se pueden usar los argumentos que se mencionaron anteriormente.
+
+```{r,echo=FALSE}
+par(mfrow = c(1,2))
+```
+
+
+```{r,fig.width=3, fig.height=3}
+
+hist(IQ, xlab = "Eje X", ylab = "Frecuencia absoluta", col = "Blue", 
+     main = "Histograma sin modificar limites")
+
+hist(IQ, xlab = "Eje X", ylab = "Frecuencia absoluta", col = "Blue", 
+     main = "Histograma sin modificar limites", ylim = c(0,350), xlim = c(35,160))
+
+```
+
+```{r,echo=FALSE}
+par(mfrow = c(1,1))
+```
+
+
+Los Histogramas también tienen un argumento adicional para cambiar la frecuencia del eje Y. Si usted la quiere tener en términos porcentuales o en frecuencia relativa puede usar el argumento _freq = F_
+
+```{r, fig.width=3, fig.height=3}
+hist(IQ, xlab = "Eje X", ylab = "Frecuencia Relativa", col = "Blue", 
+     main = "Histograma con frecuencia relativa", freq = F)
+```
+
+
+```{r}
+
+```
 
