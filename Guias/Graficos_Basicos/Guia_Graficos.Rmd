@@ -97,35 +97,49 @@ hist(IQ) #Histograma para la variable IQ
 
 Para modificarlo se pueden usar los argumentos que se mencionaron anteriormente.
 
-```{r,echo=FALSE}
-par(mfrow = c(1,2))
-```
 
-
-```{r,fig.width=3, fig.height=3}
+```{r, fig.show="hold", out.width="50%", fig.height=5}
 
 hist(IQ, xlab = "Eje X", ylab = "Frecuencia absoluta", col = "Blue", 
      main = "Histograma sin modificar limites")
 
 hist(IQ, xlab = "Eje X", ylab = "Frecuencia absoluta", col = "Blue", 
-     main = "Histograma sin modificar limites", ylim = c(0,350), xlim = c(35,160))
+     main = "Histograma con limites modificados", ylim = c(0,350), xlim = c(35,160))
 
 ```
 
-```{r,echo=FALSE}
-par(mfrow = c(1,1))
-```
 
+Los Histogramas también tienen otros argumentos adicionales:
 
-Los Histogramas también tienen un argumento adicional para cambiar la frecuencia del eje Y. Si usted la quiere tener en términos porcentuales o en frecuencia relativa puede usar el argumento _freq = F_
+Si usted  quiere mostrar los datos en frecuencia relativa o en términos porcentuales puede usar el argumento _freq = F_.  
 
-```{r, fig.width=3, fig.height=3}
+Por defecto, el numero de barras del histograma se determinan con el metodo "Sturges", pero si usted desea modificar esta caracteristica y poner un número específico de barras puede hacerlo con el comando _breaks_.
+
+```{r, fig.show="hold", out.width="50%", fig.height=5}
+
 hist(IQ, xlab = "Eje X", ylab = "Frecuencia Relativa", col = "Blue", 
      main = "Histograma con frecuencia relativa", freq = F)
+
+hist(IQ, xlab = "Eje X", ylab = "Frecuencia Absoluta", col = "Blue", 
+     main = "Histograma con 40 barras", freq = T, breaks = 40)
+
 ```
 
 
-```{r}
+Algunas veces los histogramas vienen con lineas de densidad, esto con el fin de saber la probabilidad de que la variable tome un determinado valor. Para hacer esto en R se agrega el código **lines** después del codigo **hist**.
+
+El primer argumento de este código es definir sobre cual variable se va a calcular la densidad, para ello se pone el argumento _density()_ y entre parentesis se va a colocar la variable. Con el argumento _lwd_ usted puede definir el tamaño o ancho de la curva. También está el argumento _lty_ 
+
+
+```{r, fig.show="hold", out.width="50%", fig.height=5}
+
+hist(IQ, freq = F, main = "Curva densidad", ylab = "Densidad", col = "blue")
+lines(density(IQ), lwd = 3, col = 'red')
+
+
+hist(IQ, freq = F, main = "Curva densidad", ylab = "Densidad", col = "blue")
+lines(density(IQ), lwd = 5, col = 'green', lty = 8)
+
 
 ```
 
