@@ -31,15 +31,15 @@ Para el desarrollo de esta guía se va a trabajar con la base de datos _wage2.xl
 
 Este archivo de excel cuenta con 935 observaciones y 12 variables, de las cuales 8 son cuantitativas y 4 son cualitativas.
 
-- **wage:**  Salario. (Variable cuantitativa)  
-- **hours:** Horas de trabajo a la semana. (Variable cuantitativa)  
-- **IQ:**    Puntaje IQ. (Variable cuantitativa)  
-- **KWW:**   Puntaje de conocimiento del area. (Variable cuantitativa)  
-- **educ:**  Años de estudio. (Variable cuantitativa)  
-- **exper:** Años de experiencia. (Variable cuantitativa)  
-- **tenure:** Años en el mismo trabajo. (Variable cuantitativa)   
-- **age:** Edad. (Variable cuantitativa)   
-- **married:** Estado civil. 1 - Casado. 0 - Soltero. (Variable cualitativa)  
+- **wage:**  Salario. (Variable cuantitativa)
+- **hours:** Horas de trabajo a la semana. (Variable cuantitativa)
+- **IQ:**    Puntaje IQ. (Variable cuantitativa)
+- **KWW:**   Puntaje de conocimiento del area. (Variable cuantitativa)
+- **educ:**  Años de estudio. (Variable cuantitativa)
+- **exper:** Años de experiencia. (Variable cuantitativa)
+- **tenure:** Años en el mismo trabajo. (Variable cuantitativa)
+- **age:** Edad. (Variable cuantitativa)
+- **married:** Estado civil. 1 - Casado. 0 - Soltero. (Variable cualitativa)
 - **black_:** Color de piel. 1 - Negro. 0 - Blanco.
 - **south:** Lugar de residencia. 1 - Sur. 0 - Norte
 - **urban:** Lugar de residencia. 1 - Urbano. 0 - Rural.  
@@ -60,9 +60,16 @@ Wage2$black <- as.factor(Wage2$black)
 Wage2$south <- as.factor(Wage2$south)
 Wage2$urban <- as.factor(Wage2$urban)
 str(Wage2) #Caracteristicas DF
-summary(Wage2) #Resumen DF
 
 ```
+
+El comando **summary** le va a dar un breve resumen estadistico para las variables cuantitativas, en donde encontrará el valor mínimo, máximo, la media y resumen de los 5 Números para cada variable del DataFrame. Si usted tiene variables categoricas marcadas como factor le hará un conteo de los datos de esa variable.
+
+```{r}
+summary(Wage2) #Resumen DF
+```
+
+
 
 Por último se va a fijar la base de datos con el comando **attach**, con este comando se indica que todas las variables que se van a trabajar se encuentran en esta base de datos.
 
@@ -86,7 +93,7 @@ Mas adelante los pondremos en practica.
 
 ## Histogramas.
 
-Los histogramas son gráficos que indican la frecuencia de los dedatos mediante una distribución de rangos. Este gráfico solo se puede realizar para variables cuantitativas, es decir, variables medibles, tales como el peso, la estatura, la edad, salario, etc.
+Los histogramas son gráficos que indican la frecuencia de los datos mediante una distribución de rangos. Este gráfico solo se puede realizar para variables cuantitativas, es decir, variables medibles, tales como el peso, la estatura, la edad, salario, etc.
 
 En R, estos histogramas son muy sencillos de hacer, un histograma básico se puede obtener empleando el comando **hist** de la siguiente manera.
 
@@ -111,35 +118,216 @@ hist(IQ, xlab = "Eje X", ylab = "Frecuencia absoluta", col = "Blue",
 
 Los Histogramas también tienen otros argumentos adicionales:
 
-Si usted  quiere mostrar los datos en frecuencia relativa o en términos porcentuales puede usar el argumento _freq = F_.  
+Si usted  quiere mostrar los datos en frecuencia relativa o en términos porcentuales puede usar el argumento _freq = F_.  Este comando también afecta al argumento _labels = T_, con el cual se agregan etiquetas sobre cada barra del histograma.
 
 Por defecto, el numero de barras del histograma se determinan con el metodo "Sturges", pero si usted desea modificar esta caracteristica y poner un número específico de barras puede hacerlo con el comando _breaks_.
+
+Si quiere poner el borde de las barras en otro color use _border_.
+
 
 ```{r, fig.show="hold", out.width="50%", fig.height=5}
 
 hist(IQ, xlab = "Eje X", ylab = "Frecuencia Relativa", col = "Blue", 
-     main = "Histograma con frecuencia relativa", freq = F)
+     main = "Histograma con frecuencia relativa", freq = F, labels = T, ylim = c(0,0.03))
 
 hist(IQ, xlab = "Eje X", ylab = "Frecuencia Absoluta", col = "Blue", 
-     main = "Histograma con 40 barras", freq = T, breaks = 40)
+     main = "Histograma con 30 barras y borde", freq = T, breaks = 30, border = "orange",
+     labels = T, ylim = c(0,140))
 
 ```
 
 
 Algunas veces los histogramas vienen con lineas de densidad, esto con el fin de saber la probabilidad de que la variable tome un determinado valor. Para hacer esto en R se agrega el código **lines** después del codigo **hist**.
 
-El primer argumento de este código es definir sobre cual variable se va a calcular la densidad, para ello se pone el argumento _density()_ y entre parentesis se va a colocar la variable. Con el argumento _lwd_ usted puede definir el tamaño o ancho de la curva. También está el argumento _lty_ 
+El primer argumento de este código es definir sobre cual variable se va a calcular la densidad, para ello se pone el argumento _density()_ y entre parentesis se va a colocar la variable. Con el argumento _lwd_ usted puede definir el tamaño o ancho de la curva. También está el argumento _lty_ para establecer el estilo de la linea de densidad.
 
 
 ```{r, fig.show="hold", out.width="50%", fig.height=5}
 
-hist(IQ, freq = F, main = "Curva densidad", ylab = "Densidad", col = "blue")
+hist(IQ, freq = F, main = "Curva densidad 1", ylab = "Densidad", col = "blue")
 lines(density(IQ), lwd = 3, col = 'red')
 
 
-hist(IQ, freq = F, main = "Curva densidad", ylab = "Densidad", col = "blue")
+hist(IQ, freq = F, main = "Curva densidad 2", ylab = "Densidad", col = "blue")
 lines(density(IQ), lwd = 5, col = 'green', lty = 8)
 
 
 ```
+
+
+## Boxplot
+
+El diagrama de caja o Boxplot también puede ayudar a dar una imagen sobre la distribución de los datos en los quartiles, los datos atípicos y la ubicación de la mediana. Estos graficos se hacen con la función **boxplot**.
+
+
+```{r,fig.width=3, fig.height=4}
+boxplot(exper)
+```
+
+A este diagrama también se le pueden aplicar los argumentos generales que se describieron al inicio de la guía.
+
+
+```{r, fig.show="hold", out.width="50%", fig.height=5}
+boxplot(wage, xlab = "Experiencia", ylab = "Valor de la variable", col = "Red", 
+     main = "Diagrama de caja")
+
+boxplot(wage, xlab = "Experiencia", ylab = "Valor observacion", col = "Red", 
+     main = "Boxplot con eje Y modificado", ylim = c(0,3500))
+
+```
+
+La función **boxplot** también permite modificar algunos atributos propios:
+
+El argumento _horizontal = T_ permite mostrar las cajas de modo horizontal.  
+
+Si quiere agrandar un poco los bordes de la caja y de los datos atípicos lo puede hacer con el argumento _lwd_.   
+
+Con el argumento _outpch_ se pueden cambiar los símbolos que representan los valores atípicos. Para cambiar el color de dicho símbolo use al argumento _outbg_.
+
+Para personalizar los bigotes de la caja use los argumentos _whiskcol_ y _whisklty_, con los cuales usted podrá definir el color y tipo de linea, respectivamente.
+
+
+```{r,fig.width=6, fig.height=3}
+boxplot(wage, xlab = "Valor de la variable", ylab = "Experiencia", col = "Red", 
+     main = "Diagrama personalizado", horizontal = T, outpch = 25, outbg = "green",
+     whisklty = 2, whiskcol = "purple")
+```
+
+
+
+
+También sirve para comparar la distribución de los datos de una variable cuantitativa y una variable cualitativa. En el siguiente ejemplo se va a comparar si el color piel (black) afecta al salario (wage). Primero se coloca la variable cuantitativa y luego la variable categórica.  
+
+Si desea poner colores diferentes a cada caja puede hacerlo con la función col, especificando los colores que desea poner.
+
+```{r, fig.show="hold", out.width="50%", fig.height=5}
+
+boxplot(wage ~ black, col = "bisque", main = "Un color y lineas grandes", lwd = 2)
+
+boxplot(wage ~ black, col = c("brown", "yellow"), main = "Varios colores", outpch = 7)
+
+```
+
+
+## Diagrama de barras
+
+Los diagramas de barras permiten representar gráficamente un conjunto de datos por medio de barras, el tamaño de estas barras serán proporcional a los valores representados.
+
+Para realizar este gráfico en R es necesario resumir o agrupar los datos, para ello se utiliza el comando **table**, el cual resume en una tabla los datos de la variable. 
+
+
+```{r}
+tablacasados <- table(married) #Se guarda la informacion en la variable tablacasados.
+tablacasados # Se imprime el objeto "tablacasados".
+```
+
+Al aplicar esta función sobre la variable "married", se observa que hay 100 personas que están solteras y 835 personas que están casadas, ya se ha agrupado la información dependiendo de la categoría de la variable.
+
+Si usted desea mostrar los datos en términos porcentuales puede usar el comando prop.table.
+
+
+```{r}
+Porcentaje_casados <- prop.table(tablacasados) #Se guarda la informacion en porcentajes
+Porcentaje_casados
+
+```
+Ahora tenemos la información expresada de una manera diferente, se puede afirmar que el 11% de la población total está soltera, y el 89% restante está casada.
+
+Para realizar el gráfico de barras en R se puede usar el comando **barplot**.
+
+```{r,fig.show="hold", out.width="50%", fig.height=5}
+barplot(tablacasados) # Frecuencia absoluta
+barplot(Porcentaje_casados) # Frecuencia relativa
+```
+
+Ahora se van a modificar los atributos de estos gráficos con los comandos iniciales.
+
+
+```{r,fig.show="hold", out.width="50%", fig.height=5}
+
+barplot(tablacasados, xlab = "Estado civil",
+        ylab = "Frecuencia absoluta", 
+        col = "orange ", main = "Diagrama Barras", ylim = c(0,1000))
+
+barplot(Porcentaje_casados, xlab = "Estado civil", 
+        ylab = "Frecuencia relativa", 
+        col = "orange ", main = "Diagrama Barras (%)", ylim = c(0,1))
+```
+
+Al igual que los diagramas anteriores, este también puede ser personalizado.
+
+Se puede asignar un color diferente para cada una de las barras, para ello se tiene que asignar manualmente los colores. Como es más de un color se va a usar c(), recuerde que de esta manera se pueden agrupar datos. El primer valor que aparece tanto en la gráfica como en la tabla es el 0, entonces este sería el primer color que se asignará, luego está el 1, será el segundo color. Supongamos que vamos a poner amarillo a 0 y azul a 1, se haría de la siguiente manera: _col = c("yellow", "blue")_.  
+
+Si usted quiere cambiar las etiquetas de las barras lo puede hacer con el argumento _names.arg_, el cual funciona igual que la asignación de los colores, para este caso, el 0 significa soltero, el 1 significa cadasos, entonces se haría de la siguiente manera: _names.arg = c("Soltero", "Casado")_.  
+
+Al igual que el boxplot, este grafico también permite representarlo horizontalmente, para ello use el código _horiz = T_.
+
+Usando el argumento _legend.text_ puede colocar una leyenda o cuadro donde especifique el color que representa cada dato de la variable.  Funciona exactamente igual que el argumento _names.arg_. Para modificar la posicion de este cuadro use el argumento _args.legend = list(x = " ")_, dentro de las comillas deberá establecer la posición, las opciones son: top, bottom, topleft, topright, bottomleft y bottomright.  
+
+
+```{r, fig.show="hold", out.width="50%", fig.height=5}
+
+barplot(tablacasados, xlab = "Estado civil", ylab = "Frecuencia absoluta", 
+        col = c("yellow", "blue"), main = "Diagrama Barras con leyenda",
+        ylim = c(0,1000), 
+        names.arg = c("Soltero", "Casado"),
+        legend.text = c("Soltero", "Casado"),
+        args.legend = list(x = "topleft"))
+
+barplot(Porcentaje_casados*100, xlab = "Estado civil", 
+        ylab = "Frecuencia relativa", 
+        main = "Diagrama Barras (%)",
+        col = c("yellow", "blue"),
+        names.arg = c("soltero", "casado"),
+        legend.text = c("Soltero", "Casado"),
+        args.legend = list(x = "topright"))
+
+
+```
+
+Para hacer gráficos de barras agrupadas se utiliza el argumento _beside_, si las quiere por separado ponga T, si la quiere unido en una barra ponga F.
+
+A continuación haremos dos diagramas de barras agrupadas, en donde tendremos información de los años de educación de las personas que viven en el sur y las personas que viven en el norte.
+
+```{r}
+tabla_variables = table(educ,south)
+tabla_variables ## Tabla con la información a graficar
+```
+
+R también trae integradas algunas paletas de colores, para no escribir un color para cada barra se pueden usar estas paletas, en este caso se usará la paleta _rainbow_, y entre paréntesis se colocará el número de colores a utilizar, como son 10 barras para cada grupo entonces se pondrá 10 entre paréntesis.
+
+```{r}
+barplot(tabla_variables,
+        main = "Gráfico de barras agrupado - Absoluto",
+        xlab = "Lugar de residencia", ylab = "Frecuencia absoluta",
+        col = rainbow(10),
+        names.arg = c("Sur", "Norte"),
+        legend.text = rownames(tabla_variables),
+        beside = TRUE)
+
+
+barplot(prop.table(tabla_variables)*100,
+        main = "Gráfico de barras agrupado - Relativo",
+        xlab = "Lugar de residencia", ylab = "Frecuencia relativa",
+        ylim = c(0,70),
+        col = rainbow(10),
+        names.arg = c("Sur", "Norte"),
+        legend.text = rownames(tabla_variables),
+        beside = F)
+```
+
+
+
+
+## Diagrama de torta
+
+
+
+
+
+
+
+
+
+
 
