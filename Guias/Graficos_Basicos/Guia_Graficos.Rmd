@@ -341,7 +341,7 @@ El argumento _lyt_ le permite modificar el tipo de línea de los bordes del grá
 
 Para agregar una leyenda a este gráfico debemos poner el comando **legend** después de terminado el código **pie**, en el argumento _legend_ coloque el nombre de los grupos, y con el argumento _fill_ indique los colores de esos grupos. 
 
-```{r}
+```{r, fig.show="hold", out.width="50%", fig.height=5}
 pie(tablacasados, col = c("yellow","blue"), labels = c("Soltero", "Casado"),
     main = "Estado civil")
 
@@ -351,4 +351,37 @@ legend("topleft", legend = c("Solteros", "Casados"), fill =  c("seashell","light
 ```
 
 ## Diagramas de dispersión.
+
+Los diagramas de dispersión se utilizan para mirar el comportamiento de dos variables **cuantitativas**, ayudan a determinar si una variable tiene influencia sobre la otra. Acá se manejan variables depedientes e independientes. La variable dependiente es aquella que se ve afectada por las otras variables, y las independientes son aquellas que pueden influenciar o afectar el comportamiento de la variable dependiente.
+
+Un ejemplo de esto podría ser el peso y la estatura, se dice que la estatura afecta el peso, entre más alta sea la persona más pesada debería ser. Para este caso, la variable dependiente sería el peso, mientras que la variable independiente sería la estatura, ya que el peso de la persona no afecta la estatura.
+
+- Variable dependiente (Y) = Peso.
+- Variable independiente (X) = Estatura.
+
+Suponga que con los datos que se tienen en la base de datos ___Wage2___ se quiere determinar si el puntaje IQ de una persona afecta al salario. 
+
+- Variable depediente (Y): wage (Salario)
+- Variable independiente (X): IQ
+
+Para hacer el gráfico de dispersión se utiliza la función **plot**
+
+```{r,fig.width=5, fig.height=4, fig.align = "center"}
+plot(wage~IQ, xlab = "IQ", ylab = "Salario mensual",
+     main= "Regresión salario ~ IQ", col= "darkgoldenrod2",
+     sub= "Demuestra la relación entre el salario y el puntaje IQ")
+
+```
+
+
+
+##Para la funcion _type=_
+
+#_type="p":  Dibuja puntos individuales (opcion por defecto)_
+#_type="l":  Dibuja lineas_
+#_type="b":  Dibuja puntos y lineas_
+#_type="o":  Dibuja puntos atravesados por lineas_
+#_type="h":  Dibuja con lineas verticales_
+#_type="s":  Dibuja a base de funciones escalera_
+
 
