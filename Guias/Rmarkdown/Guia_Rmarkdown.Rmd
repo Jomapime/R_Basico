@@ -24,9 +24,12 @@ install.packages("rmarkdown")
 
 ### Crear R Markdown
 
-Con el paquete rmarkdown instalado puede crear un nuevo archivo con extensión .Rmd, para hacer esto debe ir a las opciones que aparecen arriba de la interfaz "Rstudio", dar click en las opciones "File" -> "New File" -> "R markdown". Luego de esto Rstudio le solicitará título, autor y formato de salida, ingrese en formato de salida html y de clic en **OK**. Si prefiere un pdf debe tener instalado **LATEX** en su equipo.
+Con el paquete rmarkdown instalado puede crear un nuevo archivo con extensión .Rmd, para hacer esto debe ir a las opciones que aparecen arriba de la interfaz "Rstudio", dar click en las opciones "File" -> "New File" -> "R markdown", también puede hacerlo como en el ejemplo de la figura 1. Luego de esto Rstudio le solicitará título, autor y formato de salida, ingrese en formato de salida html y de clic en **OK**. Si prefiere un pdf debe tener instalado **LATEX** en su equipo. 
 
-Lo primero es el encabezado de su informe el cuál contiene: título, autor, fecha y formato de salida. Además va a encontrar un primer código entre tíldes o en un "Chunk", dicho código debe estar en el encabezado de todos los documentos. 
+![Crear Rmarkdown](Menu.png){height=280}
+
+
+Lo primero es el encabezado de su informe el cuál contiene: título, autor, fecha y formato de salida. Además va a encontrar un primer código entre tíldes o en un "Chunk", dicho código debe estar en el encabezado de todos los documentos. Mire la Figura 2. 
 
 ![Chunk en Rmarkdown](Imagen_chunk.png)
 
@@ -41,7 +44,9 @@ Por defecto R le entrega un ejemplo, para obtener el informe o documento y ver e
 
 ## Comando message
 
-Algunas veces, cuando se ejecuta un código o se carga una librería en la consola aparece un mensaje o una advertencia, estos mensajes también pueden salir en el informe creado con Rmarkdown. Si usted no desea que aparezca ese mensaje en el documento usted puede utilizar el comando ***message=FALSE*** para ocultarlo. Este comando se coloca en donde se forma el chunk, de la siguiente manera ```{r, message=FALSE}. 
+Algunas veces, cuando se ejecuta un código o se carga una librería en la consola aparece un mensaje o una advertencia, estos mensajes también pueden salir en el informe creado con Rmarkdown. Si usted no desea que aparezca ese mensaje en el documento usted puede utilizar el comando ***message=FALSE*** para ocultarlo. Este comando se coloca en donde se forma el chunk, de la siguiente manera ```{r, message=FALSE}. Mire la figura 3.
+
+
 A manera de ejemplo se va a cargar la libreria _dplyr_ dos veces, ya que por lo general esta liberia muestra un mensaje, en la primera vez no se incluirá el comando _message_, mientras que en la segunda sí se incluirá.
 
 1. Acá **NO** se colocó el comando __message__:  
@@ -55,6 +60,8 @@ library(dplyr)
 ```{r, message=FALSE}
 library(dplyr)
 ```
+
+![Opciones chunk](Cod_chunk.png)
 
 
 ## Formato
