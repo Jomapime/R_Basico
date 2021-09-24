@@ -97,7 +97,7 @@ Los histogramas son gráficos que indican la frecuencia de los datos mediante un
 
 En R, estos histogramas son muy sencillos de hacer, un histograma básico se puede obtener empleando el comando **hist** de la siguiente manera.
 
-```{r,fig.width=3, fig.height=3}
+```{r,fig.width=3, fig.height=3, fig.align = "center"}
 hist(IQ) #Histograma para la variable IQ
 
 ```
@@ -160,7 +160,7 @@ lines(density(IQ), lwd = 5, col = 'green', lty = 8)
 El diagrama de caja o Boxplot también puede ayudar a dar una imagen sobre la distribución de los datos en los quartiles, los datos atípicos y la ubicación de la mediana. Estos graficos se hacen con la función **boxplot**.
 
 
-```{r,fig.width=3, fig.height=4}
+```{r,fig.width=3, fig.height=3, fig.align = "center"}
 boxplot(exper)
 ```
 
@@ -268,7 +268,7 @@ Usando el argumento _legend.text_ puede colocar una leyenda o cuadro donde espec
 ```{r, fig.show="hold", out.width="50%", fig.height=5}
 
 barplot(tablacasados, xlab = "Estado civil", ylab = "Frecuencia absoluta", 
-        col = c("yellow", "blue"), main = "Diagrama Barras con leyenda",
+        col = c("yellow", "blue"), main = "Diagrama Barras con leyenda izquierda",
         ylim = c(0,1000), 
         names.arg = c("Soltero", "Casado"),
         legend.text = c("Soltero", "Casado"),
@@ -276,7 +276,7 @@ barplot(tablacasados, xlab = "Estado civil", ylab = "Frecuencia absoluta",
 
 barplot(Porcentaje_casados*100, xlab = "Estado civil", 
         ylab = "Frecuencia relativa", 
-        main = "Diagrama Barras (%)",
+        main = "Diagrama Barras (%) con leyenda derecha",
         col = c("yellow", "blue"),
         names.arg = c("soltero", "casado"),
         legend.text = c("Soltero", "Casado"),
@@ -294,14 +294,14 @@ tabla_variables = table(educ,south)
 tabla_variables ## Tabla con la información a graficar
 ```
 
-R también trae integradas algunas paletas de colores, para no escribir un color para cada barra se pueden usar estas paletas, en este caso se usará la paleta _rainbow_, y entre paréntesis se colocará el número de colores a utilizar, como son 10 barras para cada grupo entonces se pondrá 10 entre paréntesis.
+R también trae integradas algunas paletas de colores, para no escribir un color para cada barra se pueden usar estas herramientas, en este caso se usará la paleta _rainbow_, y entre paréntesis se colocará el número de colores a utilizar, como son 10 barras para cada grupo entonces se pondrá 10 entre paréntesis.
 
-```{r}
+```{r,fig.height=4}
 barplot(tabla_variables,
         main = "Gráfico de barras agrupado - Absoluto",
         xlab = "Lugar de residencia", ylab = "Frecuencia absoluta",
         col = rainbow(10),
-        names.arg = c("Sur", "Norte"),
+        names.arg = c("Norte", "Sur"),
         legend.text = rownames(tabla_variables),
         beside = TRUE)
 
@@ -311,23 +311,44 @@ barplot(prop.table(tabla_variables)*100,
         xlab = "Lugar de residencia", ylab = "Frecuencia relativa",
         ylim = c(0,70),
         col = rainbow(10),
-        names.arg = c("Sur", "Norte"),
+        names.arg = c("Norte", "Sur"),
         legend.text = rownames(tabla_variables),
         beside = F)
 ```
 
 
 
-
 ## Diagrama de torta
 
+El diagrama de torta es un gráfico circular que representa porcentajes sobre la composición de la variable, donde el área y la longitud del arco de cada sector es proporcional a la cantidad representada. 
+
+Para hacer estos gráficos se debe hacer el mismo proceso que con los diagramas de barras, se debe tener una tabla que resuma y contabilice los datos, sobre esta tabla se emplea la función **pie** . (Se van a usar las mismas tablas del ejemplo anterior).
 
 
+```{r,fig.width=3, fig.height=3, fig.align = "center"}
 
+pie(tablacasados)
 
+```
 
+Ahora vamos a personalizarlo un poco: 
 
+La asignación de colores y etiquetas de los sectores se realiza practicamente igual al diagrama de barras, con la única diferencia de que para las etiquetas acá se utiliza el argumento _labels_. Con la etiqueta labels podrá poner ya sea el grupo al que pertenece el sector de gráfico o el valor numérico que desea representar.
 
+También se puede modificar la dirección del gráfico con el argumento _clockwise = T_, los datos de la tabla también se irán organizando en orden como si fuera un relog. 
 
+El argumento _lyt_ le permite modificar el tipo de línea de los bordes del gráfico.
 
+Para agregar una leyenda a este gráfico debemos poner el comando **legend** después de terminado el código **pie**, en el argumento _legend_ coloque el nombre de los grupos, y con el argumento _fill_ indique los colores de esos grupos. 
+
+```{r}
+pie(tablacasados, col = c("yellow","blue"), labels = c("Soltero", "Casado"),
+    main = "Estado civil")
+
+pie(Porcentaje_casados, col = c("seashell","lightcyan"), labels = c("11%", "89%"),
+    main = "Estado civil - Porcentaje",clockwise = T, lty = 2)
+legend("topleft", legend = c("Solteros", "Casados"), fill =  c("seashell","lightcyan"))
+```
+
+## Diagramas de dispersión.
 
