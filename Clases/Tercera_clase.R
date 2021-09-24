@@ -2,15 +2,11 @@
 
 library(readxl)
 Wage2 <- read_excel("Clases/Wage2.xlsx")
-#Explicar base de datos y cambio de nombre.
-
-
-#Definicion estadistica
+head(Wage2,3)
 
 mean(Wage2$IQ)
 
 attach(Wage2)
-head(Wage2)
 
 ## Estadistica descriptiva 
 
@@ -19,18 +15,21 @@ var(hours)
 sd(hours)
 
 summary(Wage2)
-Wage2$married <- as.factor(Wage2$married)
-summary(Wage2)
-Wage2$urban <- as.factor(Wage2$urban)
 
-#library(psych)
-#describe(Wage2)
-#unique(Wage2$brthord)
+Wage2$married <- as.factor(Wage2$married)
+
+Wage2$urban <- as.factor(Wage2$urban)
+summary(Wage2)
+
+## El comando "describe" le puede dar una descripcion mas detallada de su DF
+
+library(psych)
+describe(Wage2)
 
 
 ## Graficos basicos en R
 
-#Graficos para ver la distribucion de los datos - Histograma y boxplot.
+## VARIABLES CUANTITATIVAS - HISTOGRAMA, BOXPLOT
 
 ### Variable IQ
 
@@ -44,20 +43,22 @@ boxplot(IQ, xlab = "IQ", col = "Red", main = "Diagrama de caja IQ",
 
 par(mfrow = c(2,1))
 
-## EJERCICIO
-### Variable educ
-### Histograma = Frecuencia Relativa
-### Boxplot = Vertical
+
+## EJERCICIO GRAFICOS CON VARIABLE EDUC
+
 
 hist(educ, xlab = "Años de estudio", ylab = "Frecuencia Relativa", 
      freq = F, col = "olivedrab", main = "Histograma años de estudio")
 boxplot(exper, xlab = "Años de estudio", col = "olivedrab",
         main = "Diagrama de caja años de estudio", horizontal = F)
 
-par(mfrow = c(2,2))
-par(mfrow = c(1,1))
+par(mfrow = c(2,2)) #PARA VER TODOS LOS GRAFICOS
 
-## VARIABLES CUALITATIVAS
+par(mfrow = c(1,1)) #PARA VER SOLO UN GRAFICO
+
+
+## VARIABLES CUALITATIVAS - DIAGRAMA DE TORTA Y DIAGRAMA DE BARRAS
+
 
 ### Variable married
 
@@ -72,7 +73,6 @@ barplot(tablacasados, xlab = "Estado civil", ylab = "Porcentaje",
         col = c("yellow", "blue"), main = "Diagrama Barras", 
         names.arg = c("soltero", "casado"), ylim = c(0,1))
 
-## EJERCICIO ## DEPENDIENDO DEL TIEMPO
 
 ### urban 
 
@@ -80,11 +80,16 @@ tablaresidencia= table(urban)
 tablaresidencia = prop.table(tablaresidencia)
 tablaresidencia
 
-pie(tablaresidencia, col = c("blue","yellow"),labels = c("Rural", "Urbano"),
+pie(tablaresidencia, col = c("blue","yellow"),
+    labels = c("Rural", "Urbano"),
     main = "Distribución lugar de residencia")
 
-barplot(tablaresidencia,xlab = "Lugar donde vive",ylab = "Porcentaje",
-        ylim = c(0,1),col = c("Blue","Yellow"),main = "Grafico de barras lugar de residencia",
+barplot(tablaresidencia,
+        xlab = "Lugar donde vive",
+        ylab = "Porcentaje",
+        ylim = c(0,1),
+        col = c("Blue","Yellow"),
+        main = "Grafico de barras lugar de residencia",
         names.arg = c("Rural", "Urbano"))
 
 
@@ -98,18 +103,6 @@ plot(1:10, type = "b", col = "Blue", xlim = c(1,10), ylab = "Eje Y", xlab = "Eje
 par(new=T)
 plot(c(4,3,2,8),c(6,8,3,5), type = "o", col = "red", xlim = c(1,10), ylab = "", xlab = "")
 
-
-### DISPERSION - Comparar dos variables - Ejemplo - Peso y Estatura - Estatura aumenta, peso tambien
-#alt 126
-#alt gr + ladoenter
-
-
-plot(wage~exper, xlab = "Años en el mismo empleo", ylab = "Salario mensual",
-     main= "Regresión salario", col= "darkgoldenrod2",
-     sub= "Demuestra la relación entre el tiempo en un mismo trabajo y el salario", 
-     ylim = c(0,3500), xlim = c(0,25))
-
-
 ##Para la funcion _type=_
 
 #_type="p":  Dibuja puntos individuales (opcion por defecto)_
@@ -119,6 +112,18 @@ plot(wage~exper, xlab = "Años en el mismo empleo", ylab = "Salario mensual",
 #_type="h":  Dibuja con lineas verticales_
 #_type="s":  Dibuja a base de funciones escalera_
 
+
+### DISPERSION - Comparar dos variables 
+## Ejemplo - Peso y Estatura - Estatura aumenta, peso tambien
+
+
+plot(wage~exper, xlab = "Años en el mismo empleo", ylab = "Salario mensual",
+     main= "Regresión salario", col= "darkgoldenrod2",
+     sub= "Demuestra la relación entre el tiempo en un mismo trabajo y el salario", 
+     ylim = c(0,3500), xlim = c(0,25))
+
+#Variable dependiente - Variable que se ve afectada. (wage)
+#Variable independite - que afecta la otra variable  (exper)
 
 
 #DPLYR
@@ -146,22 +151,21 @@ COVID$date =as.Date(COVID$date)
 
 library(dplyr)
 
-### Select
+### Select - FILTRAR COLUMNAS
 
-base_1 <- select(COVID, location,date,new_cases)
+base_1 <- select(COVID, location,date,new_cases) #Extraer columnas
 
-base_1 <- select(COVID, -date)
+base_1 <- select(COVID, -date) #Eliminar columnas
 head(base_1)
 
-
-#pipe
+#pipe (%>%)
 
 base_1 <- COVID %>%
   select(location,date,new_cases,new_deaths,total_cases,total_deaths,population)
 
 
 
-### Distinct | Count
+### Distinct (Mirar los datos en una variable) | Count (Contar los datos de la variable)
 
 distinct(COVID, continent)
 
@@ -191,18 +195,25 @@ Mayores_o <- COVID %>%
   select(location,date,new_cases,new_deaths)%>%
   filter(new_cases > 12000 | new_deaths > 600)
 head(Mayores_o)     
-     
-#### PONER EJERCICIO ####
+
+Colombia <- Base%>%
+  filter(country == "Colombia" & date == "2020-06-10")
+View(Colombia)
+
+Base%>%
+  filter(country == "Colombia" | "2020-06-10")
 
 
-### group_by & summarize
+
+
+### group_by & summarize (Resumir datos agrupados)
 
 COVID %>%
   group_by(continent) %>%
   summarize(media_continente =mean(na.omit(new_cases)))
 
 
-### Mutate
+### Mutate (Crear nuevas columnas)
 
 
 Porcentaje <- COVID%>%
@@ -217,3 +228,8 @@ Junio = COVID%>%
   select(date, location, new_cases,total_cases, Casos_may)
 
 head(Junio)
+
+
+
+
+
