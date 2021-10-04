@@ -14,6 +14,12 @@ knitr::opts_chunk$set(echo = TRUE)
 
 \pagebreak
 
+**NOTA ACLARATORIA**: Esta guía aún se encuentra en construcción, no es la versión final, razón por la cual está sujeta a modificaciones.
+
+**Esta guía está diseñada exclusivamente para uso pedagógico**
+
+
+## Introducción
 
 Una de las grandes ventajas del Software R es la gran capacidad que tiene para la creación de gráficos, es un programa diseñado y empleado primordialmente para realizar análisis estadístico y construir gráficos tanto para datos cuantitativos como cualitativos. El objetivo de esta guía es dar una introducción a la creación de gráficos basicos y sencillos con Rbase.  
 
@@ -51,6 +57,7 @@ library(readxl)
 Wage2 <- read_excel("Wage2.xlsx") ##Importar archivo.
 str(Wage2) #Caracteristicas del archivo.
 ```
+### Características de la base de datos.
 
 Al cargar la base de datos, se puede evidenciar que las variables categóricas también están definidas como tipo numerico. A continuación se va a ajustar el tipo de dato a **Factor**
 
@@ -147,7 +154,6 @@ El primer argumento de este código es definir sobre cual variable se va a calcu
 hist(IQ, freq = F, main = "Curva densidad 1", ylab = "Densidad", col = "blue")
 lines(density(IQ), lwd = 3, col = 'red')
 
-
 hist(IQ, freq = F, main = "Curva densidad 2", ylab = "Densidad", col = "blue")
 lines(density(IQ), lwd = 5, col = 'green', lty = 8)
 
@@ -161,7 +167,7 @@ El diagrama de caja o Boxplot también puede ayudar a dar una imagen sobre la di
 
 
 ```{r,fig.width=3, fig.height=3, fig.align = "center"}
-boxplot(exper)
+boxplot(wage)
 ```
 
 A este diagrama también se le pueden aplicar los argumentos generales que se describieron al inicio de la guía.
@@ -210,6 +216,8 @@ boxplot(wage ~ black, col = c("brown", "yellow"), main = "Varios colores", outpc
 
 
 ## Diagrama de barras
+
+### Diagrama para solo una variable.
 
 Los diagramas de barras permiten representar gráficamente un conjunto de datos por medio de barras, el tamaño de estas barras serán proporcional a los valores representados.
 
@@ -285,6 +293,8 @@ barplot(Porcentaje_casados*100, xlab = "Estado civil",
 
 ```
 
+### Barras agrupadas - Para graficar más de una variable.
+
 Para hacer gráficos de barras agrupadas se utiliza el argumento _beside_, si las quiere por separado ponga T, si la quiere unido en una barra ponga F.
 
 A continuación haremos dos diagramas de barras agrupadas, en donde tendremos información de los años de educación de las personas que viven en el sur y las personas que viven en el norte.
@@ -352,6 +362,8 @@ legend("topleft", legend = c("Solteros", "Casados"), fill =  c("seashell","light
 
 ## Diagramas de dispersión.
 
+### Para comparar dos variables.
+
 Los diagramas de dispersión se utilizan para mirar el comportamiento de dos variables **cuantitativas**, ayudan a determinar si una variable tiene influencia sobre la otra. Acá se manejan variables depedientes e independientes. La variable dependiente es aquella que se ve afectada por las otras variables, y las independientes son aquellas que pueden influenciar o afectar el comportamiento de la variable dependiente.
 
 Un ejemplo de esto podría ser el peso y la estatura, se dice que la estatura afecta el peso, entre más alta sea la persona más pesada debería ser. Para este caso, la variable dependiente sería el peso, mientras que la variable independiente sería la estatura, ya que el peso de la persona no afecta la estatura.
@@ -373,15 +385,81 @@ plot(wage~IQ, xlab = "IQ", ylab = "Salario mensual",
 
 ```
 
+### Para solo una variable.
+
+Con los gráficos de dispersión también se puede ver como se comporta solo una variable, para ello se pone la función **plot** y entre paréntesis se indica la variable a graficar. En estos casos, en el eje Y se grafican los datos especificados, mientras que el eje X muestra la posición o número de esos datos. A continuación se va a graficar una secuencia numérica que inicie en 10 y termine en 19.
+
+```{r,fig.width=4, fig.height=3, fig.align = "center"}
+plot(10:19, col = "blue", ylab = "Datos", xlab = "Posicion de los datos")
+```
 
 
-##Para la funcion _type=_
+La forma en la que se grafican los datos también puede ser modificada utilizando el comando _type_, en donde deberá especificar alguna de las siguientes opciones:
 
-#_type="p":  Dibuja puntos individuales (opcion por defecto)_
-#_type="l":  Dibuja lineas_
-#_type="b":  Dibuja puntos y lineas_
-#_type="o":  Dibuja puntos atravesados por lineas_
-#_type="h":  Dibuja con lineas verticales_
-#_type="s":  Dibuja a base de funciones escalera_
+* type= "p":  Dibuja puntos individuales (opcion por defecto).
+* type= "l":  Dibuja lineas.
+* type= "b":  Dibuja puntos y lineas.
+* type= "o":  Dibuja puntos atravesados por lineas.
+* type= "h":  Dibuja con lineas verticales.
+* type= "s":  Dibuja a base de funciones escalera.
+* type= "S":  Dibuja a base de escalera.
 
+
+## Sobreponer gráficos.
+
+Usted también puede sobreponer los gráficos, es decir, crear varios gráficos y graficarlos o ponerlos todos al mismo tiempo, esto se hace con el comando **par(new = T)**. En primer lugar se coloca el primer gráfico, en la siguiente fila escribe **par(new = T)** y debajo escribe el código del otro gráfico que quiere sobreponer.
+
+
+A continuación se mostrará un gráfico que contiene algunos ejemplos de las opciones que se pueden usar en el argumento _type_ de la función **plot**.
+
+En primera instancia se va a crear un diagrama que grafique los datos del 1 al 10, este gráfico tendrá los datos con color azul, luego se agregará otro gráfico con unas coordenadas específicas con color rojo, posteriormente un diagrama que tenga una secuencia numérica del 8 al 1 con color verde, finalmente, otro gráfico que repita 10 veces el número 1, los datos de este último gráfico aparecerán con color naranja.
+
+
+```{r,fig.width=5, fig.height=4, fig.align = "center"}
+plot(1:10, type = "b", col = "blue")
+par(new=T)
+plot(c(4,3,2,8),c(6,8,3,5), type = "o", col = "red")
+par(new = T)
+plot(8:1, type = "s", col = "green", )
+par(new = T)
+plot(rep(1,10), type = "p", col = "Orange")
+```
+
+De esta forma, ya están sobrepuestos los 4 gráficos, cada uno con argumento _type_ diferente, sin embargo, note que tanto los nombres de los ejes como los rangos numéricos están desordenados, ya que cada gráfico adopta su propio rango numérico para los ejes, al igual que los nombres o etiquetas de estos. Para corregirlo puede indicar en cada gráfico un rango numérico específico para los ejes, también puede asignar o quitar las etiquetas o nombres de los ejes. Detalle el siguiente código y observe el gráfico resultante.
+
+
+```{r,fig.width=5, fig.height=4, fig.align = "center"}
+plot(1:10, type = "b", col = "blue",
+     xlim = c(1,10), ylim = c(0,12),
+     ylab = "Eje Y", xlab = "Eje X", main = "4 Graficos en 1")
+par(new=T)
+plot(c(4,3,2,8),c(6,8,3,5), type = "o", col = "red",
+     xlim = c(1,10), ylim = c(0,12),
+     ylab = "", xlab = "")
+par(new = T)
+plot(11:2, type = "s", col = "green",
+     xlim = c(1,10), ylim = c(0,12),
+     ylab = "", xlab = "")
+par(new = T)
+plot(rep(1,10), type = "p", col = "Orange",
+     xlim = c(1,10), ylim = c(0,12),
+     ylab = "", xlab = "")
+```
+
+## Ejercicios
+
+1. Investigue que otros argumentos pueden tener los siguientes comandos. (Recuerde que para mirar más información sobre las funciones puede solicitar ayuda desde Rstudio, para ello utilice el símbolo ? y luego el comando del cual requiere más información. **Ejemplo: ?plot**)
+    + hist
+    + boxplot
+    + barplot
+    + pie
+    + plot
+    + par
+
+2. Mire cuáles variables de la base de datos **Wage2** faltan por graficar, luego construya un gráfico para cada una de estas variables, trate de personalizarlo lo que más pueda, cambie cada atributo de estos gráficos, si puede, incluya argumentos que haya encontrado en la investigación del punto anterior.
+
+
+**NOTA ACLARATORIA**: Esta guía aún se encuentra en construcción, no es la versión final, razón por la cual está sujeta a modificaciones.
+
+**Esta guía está diseñada exclusivamente para uso pedagógico**
 
