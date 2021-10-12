@@ -35,7 +35,7 @@ Acá encontrará las siguientes gúías
 1. **Guia_Rmarkdown:** En esta guía se explica como crear archivos en rmarkdown (.Rmd) y como crear informes o documentos con esta herramienta. También encontrará algunos tips para dar formatos de texto en lenguaje markdown.
 2. **Primeros_pasos:** En este archivo PDF se explican los aspectos básicos que se deben tener en cuenta a la hora de manerjar datos en R. Acá encontrará una guía para identificar los tipos de datos y estructuras de datos (Variables, Vectores, Matrices, DataFrame). Al final del documento encontrará algunos ejercicios para practicar lo aprendido.
 3. **Guia_Graficos:** Acá encontrará una explicación detallada para crear y personalizar gráficos básicos en R. (Histogramas, Diagramas de caja, Diagramas de barras, Graficos de torta, Diagramas de dispersión.
-4. **Guia_Dplur:** Dplyr es uno de los paquetes más usados de R, lo anterior debido a que contiene funciones diseñadas para permitir la manipulación de marcos de datos de una manera intuitiva y fácil de usar. En esta guía se explicarán algunas de las funciones de esta librería.
+4. **Guia_Dplyr:** Dplyr es uno de los paquetes más usados de R, lo anterior debido a que contiene funciones diseñadas para permitir la manipulación de marcos de datos de una manera intuitiva y fácil de usar. En esta guía se explicarán algunas de las funciones de esta librería.
 
 ### Carpeta codigos.
 
