@@ -18,6 +18,112 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Esta guía es exclusivamente para uso pedagógico**
 
+# Introducción.
+
+R es un software, o lenguaje de programación de distribución libre, bajo Licencia GNU. Fue diseñado principalmente para realizar análisis estadísticos y gráficas. Es uno de los lenguajes libres más utilizados en investigación por los estadísticos, puesto que tiene gran relevancia en áreas de Big Data, minería de datos,  predicciones, Inteligencia Artificial. Este software corre en distintas plataformas Linux, Windows, MacOS, entre otros.
+
+A continuación se mencionarán algunas ventajas de trabajar con R.
+
+*	**Código abierto y gratuito:**  Puede ser usado sin restricciones, es un programa distribuido de manera gratuita. La licencia GNU permite usar R para cualquier fin, sin limitaciones, no importando si es para uso personal, académico o comercial.
+*	**Manipulación de datos:** : R permite el tratamiento y manipulación de datos con gran facilidad y velocidad. También permite la lectura de archivos provenientes de otros programas como JSON, SPSS, Excel, SAS, STATA, e incluso se puede vincular con SQL.
+*	**Automatización de procesos:**  R utiliza un lenguaje de script en lugar de una interfaz gráfica de usuario, por lo que es mucho más fácil de automatizar cosas en R que en Excel, ya que solo se necesita escribir el código una vez, luego de eso se puede ejecutar el código cuantas veces quiera sin necesidad de volver a hacer todo el proceso.
+
+*	**Mayor precisión en cálculos:** El lenguaje de programación R fue creado específicamente para realizar análisis estadístico, por lo que es más preciso para calculos estadísticos y matemáticos avanzados.
+*	**Mayor volumen de datos:** R también fue creado para manejar grandes volúmenes de datos, por lo cual no tiene ningún lío cuando se manejan bases de datos grandes.
+*	**Análisis estadísticos avanzados:** Como es un programa Open Source cada persona puede contribuir con paquetes, producto de esto se han publicado librerías con funciones específicas atendiendo a las necesidades de los investigadores.
+*	**Gráficos avanzados e interactivos:** R dispone de múltiples funciones diseñadas para la representación gráfica de datos, por lo que usted podrá realizar cualquier tipo de gráfico, ya sea básico o de alto nivel.
+
+
+## R como calculadora.
+
+Un uso de R es como calculadora, a continuación verá un listado con algunos comandos de operaciones básicas que se pueden hacer con el software y posteriormente encontrará ejemplos de operaciones en R.
+
+1. Suma (+)
+2. Resta (-)
+3. Multiplicación (*)
+4. División (/)
+5. División entera (%/%)
+6. potenciación (ˆ)
+7. Raiz Cuadrada (sqrt)
+8. Logaritmos (log)
+9. Multiplicación de matrices (%*%)
+10. Transponer (t())
+
+Para las operaciones entre matrices debe tener en cuenta las reglas del álgebra matricial, por ejemplo: no todas las matrices se pueden sumar entre ellas. 
+
+Para correr los códigos presione las teclas CTRL + ENTER en la fila que desea ejecutar.
+
+```{r, eval=FALSE}
+# El numeral se usa para poner un comentario en el código. 
+# Lo que se ponga después de "#" no será interpretado por R, será omitido. 
+# Hacer comentarios puede ayudar a que el código sea más fácil de entender.
+
+#SUMA
+45 + 6 + 89
+#RESTA
+8 - 9 - 2
+
+#MULTIPLICACION
+10 * 5
+10 * (-5)
+
+#DIVISION
+8 / 3
+8 %/% 3   #Division entera
+
+#POTENCIACION
+5^2
+5**3
+
+#RAIZ CUADRADA
+sqrt(25)
+
+#LOGARITMOS
+log(10)
+``` 
+
+## Instalación de paquetes.
+
+Una de las ventajas de R es que puede ser expandido por paquetes, cada paquete es una colección de funciones diseñadas para atender una tarea específica. En su gran mayoría están almacenados en el CRAN (The Comprehensive R Archive Network), el cual hace la función de servidor, acá encontrará toda la documentación de R, así como de sus paquetes, librerías y funciones. 
+
+Hay paquetes que ya vienen instalados de manera predeterminada, para hacer uso de ellos puede llamarlos con la función **library()**, entre paréntesis deberá colocar la librería que va a utilizar. Este procedimiento se debe realizar siempre que vaya a hacer uso de alguna librería en específico.  
+
+```{r}
+library(dplyr) #Librería para manipulación de datos.
+```
+
+Si el paquete no viene de forma predeterminada (Como es el caso de dplyr) deberá instalarlo. Hay varias maneras para hacer la instalación de los paquetes. Una de estas es haciendo uso de la interfaz de Rstudio, puede dirigirse a la pestaña "Packages", estando ahí deberá dar click en el botón "Install", luego deberá escribir el paquete que quiere instalar y por último dar click en el botón "Install". Vea las figuras 1 y 2.
+
+![Pestaña "Packages"](Packages.JPG)
+
+
+![Menu "Install"](Install.jpg)
+
+Otra manera de hacerlo es por medio de código, utilizando el comando **install.packages()**, entre paréntesis deberá colocar entre comillas el nombre del paquete que desea instalar. 
+
+```{r, eval=FALSE}
+install.packages("dplyr")
+```
+
+**La instalación del paquete solo debe hacerla la primera vez, después de haberla instalado solo tiene que llamarla usando el comando library() **
+
+
+## Solicitar ayuda en R.
+
+Si usted desea obtener ayuda o más información sobre alguna función o librería puede hacerlo mediante cógido. Para ello puede emplear la función **help()** especificando el comando sobre el cual quiere solicitar la ayuda. A continuación se solicitará ayuda para la función **class**. La información aparecerá en la pestaña **help**, al lado de la pestaña donde se realizó la intalación de los paquetes.
+
+```{r, eval=FALSE}
+help(class)
+```
+
+Una forma más abreviada para perdir ayuda es utilizando el signo "?" antes de la función. Si usted quiere información más general o menos específica use "??".
+
+```{r, eval=FALSE}
+?class
+??class
+```
+
+
 # Tipos de datos en R.
 
 En los lenguajes de programación se encuentran varios tipos de datos. Los mas usuales son estos:
@@ -38,43 +144,6 @@ class(2.5)
 class("Hola mundo")
 class(as.factor("Hola mundo"))
 class(TRUE)
-```
-
-# R como calculadora.
-
-Un uso de R es como calculadora, a continuación verá un listado con algunos comandos de operaciones básicas que se pueden hacer con el software y posteriormente encontrará ejemplos de operaciones en R.
-
-1. Suma (+)
-2. Resta (-)
-3. Multiplicación (*)
-4. División (/)
-5. División entera (%/%)
-6. potenciación (ˆ)
-7. Raiz Cuadrada (sqrt)
-8. Logaritmos (log)
-9. Multiplicación de matrices (%*%)
-10. Transponer (t())
-
-Para las operaciones entre matrices debe tener en cuenta las reglas del álgebra matricial, por ejemplo: no todas las matrices se pueden sumar entre ellas. 
-
-```{r, eval=FALSE}
-#SUMA
-45 + 6 + 89
-#RESTA
-8 - 9 - 2
-#MULTIPLICACION
-10 * 5
-10 * (-5)
-#DIVISION
-8 / 3
-8 %/% 3   #Division entera
-#POTENCIACION
-5^2
-5**3
-#RAIZ CUADRADA
-sqrt(25)
-#LOGARITMOS
-log(10)
 ```
 
 
@@ -237,7 +306,7 @@ vector numerico de longitud 2, que define el numero de filas y columnas de la ma
 
 ### Creación de matrices
 
-En la figura 1 se muestra un ejemplo de una matriz numérica.
+En la figura 3 se muestra un ejemplo de una matriz numérica.
 
 ![Matriz 1](matriz1.JPG)
 
@@ -251,7 +320,7 @@ matrix(1:12, nrow = 3, ncol = 4)
 
 ![Matriz 2](Matriz2.JPG)
 
-Para organizar los valores por filas y que queden como en la figura 2 se va a utilizar el argumento **byrow**. Mire el siguiente código.
+Para organizar los valores por filas y que queden como en la figura 4 se va a utilizar el argumento **byrow**. Mire el siguiente código.
 
 ```{r}
 matrix(1:12, nrow = 3, ncol = 4, byrow = TRUE)
@@ -439,14 +508,14 @@ head(AAPL,3)
 
 
 R también permite trabajar con varios tipos de archivo, se pueden importar archivos provenientes de programas como SPSS, SAS, STATA, Excel, entre otros.
-Para importar estos archivos debe dirigirse al entorno, allí encontrará una opción que dice _Import Dataset_, al seleccionarla le aparecerá una lista, con algunos de los formatos de archivo que puede importar. Mire la Figura 3.
+Para importar estos archivos debe dirigirse al entorno, allí encontrará una opción que dice _Import Dataset_, al seleccionarla le aparecerá una lista, con algunos de los formatos de archivo que puede importar. Mire la Figura 5.
 
 ![Menu Import Dataset.](Entorno.JPG)
 
 
 Las dos primeras opciones, por lo general se usan para importar archivos **txt** y **csv**, la tercera opción es para importar archivos de excel o archivos **.xlsx**. 
 
-Para importar los archivos seleccione la opción correspondiente, a continuación le aparecerá una nueva ventana, mire la figura 4. Lo primero que debe hacer es darle al botón **Browse...**, luego deberá buscar y seleccionar lo archivo. Cuando lo haya seleccionado R le mostrará una vista previa de los datos del archivo. Cuando confirme que toda la información está correcta copie el código que aparece en la parte inferior derecha (Puede hacerlo dando click en el logo resaltado), le dará importar y por último, pegará el código copiado en su script de R
+Para importar los archivos seleccione la opción correspondiente, a continuación le aparecerá una nueva ventana, mire la figura 6. Lo primero que debe hacer es darle al botón **Browse...**, luego deberá buscar y seleccionar lo archivo. Cuando lo haya seleccionado R le mostrará una vista previa de los datos del archivo. Cuando confirme que toda la información está correcta copie el código que aparece en la parte inferior derecha (Puede hacerlo dando click en el logo resaltado), le dará importar y por último, pegará el código copiado en su script de R
 
 ![Menu Import Dataset.](Imp_Ex.JPG)
 
