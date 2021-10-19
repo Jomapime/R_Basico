@@ -10,6 +10,8 @@ lang: es-MX
 knitr::opts_chunk$set(echo = TRUE)
 ```
   
+**NOTA ACLARATORIA**: Esta guía aún se encuentra en construcción, no es la versión final, razón por la cual está sujeta a modificaciones. **Esta guía es exclusivamente para uso pedagógico**
+
 
 ## R Markdown
 
@@ -42,10 +44,14 @@ Por defecto R le entrega un ejemplo, para obtener el informe o documento y ver e
 
 - Knit: "tejer el archivo". El rmarkdown paquete llamará al "knitr" paquete. knitr ejecutará cada fragmento de código  R en el documento y agregará los resultados del código en los espacios correspondientes.
 
-## Comando message
 
-Algunas veces, cuando se ejecuta un código o se carga una librería en la consola aparece un mensaje o una advertencia, estos mensajes también pueden salir en el informe creado con Rmarkdown. Si usted no desea que aparezca ese mensaje en el documento usted puede utilizar el comando ***message=FALSE*** para ocultarlo. Este comando se coloca en donde se forma el chunk, de la siguiente manera ```{r, message=FALSE}. Mire la figura 3.
+## Comandos para rmarkdown.
 
+En esta sección se repasarán algunos códigos que se pueden emplear en la primera fila del chunk para modificar el output, salida o resultado del código de R. 
+
+### warning, message, and error
+
+Algunas veces, cuando se ejecuta un código o se carga una librería en la consola aparece un mensaje o una advertencia, estos mensajes también pueden salir en el informe creado con Rmarkdown. Si usted no desea que aparezca ese mensaje en el documento usted puede utilizar el comando ***message=FALSE*** para ocultarlo. Este comando se coloca en donde se forma el chunk, de la siguiente manera ```{r, message=FALSE}.
 
 A manera de ejemplo se va a cargar la libreria _dplyr_ dos veces, ya que por lo general esta liberia muestra un mensaje, en la primera vez no se incluirá el comando _message_, mientras que en la segunda sí se incluirá.
 
@@ -61,7 +67,30 @@ library(dplyr)
 library(dplyr)
 ```
 
+En la figura 3 podrá observar cómo se utilzó el comando **message** para los dos ejemplos anteriores.
+
 ![Opciones chunk](Cod_chunk.png)
+
+Para las advertencias puede usar el comando **warning = FALSE**, si su código tiene algún error y no quiere que aparezca en el informe utilice **error = FALSE**. Funcionan de la misma manera que **message**.
+
+### eval
+
+Si usted quiere mostar un código en el informe pero no desea que este sea ejecutado puede usar **eval = FALSE**, de esta manera R entenderá que debe omitir el código colocado en ese chunk. eval funciona de la misma manera que los comandos anteriores, debe colocarse en la fila donde inicia el chunk. El siguiente código contiene el argumento eval, se mostrará en el informe pero no se ejecutará. Observe la figura 4.
+
+```{r, eval=FALSE}
+## Se crean los objetos "estatura" con un valor de 1.85 y "peso" con un valor de 75
+estatura <- 1.85
+peso <- 75
+## Se crean los objetos "n" y "q"
+5 -> n
+sqrt(64) -> q
+```
+
+![Chunk eval](eval.PNG)
+
+### echo
+
+El argumento **echo = FALSE** no mostrará el código en el informe, pero sí ejecutará el código y mostrará los resultados.
 
 
 ## Formato
@@ -98,6 +127,8 @@ Resultado: ~~tachado~~
 Para colocar enlaces, ponga el link de la siguiente manera \<enlace>  
 
 Resultado: <http://www.rusersgroup.com>
+
+[enlace en línea](http://www.limni.net)
 
 ### Viñetas y listas
 
@@ -137,9 +168,15 @@ Para que resulte así:
 * Elemento
 
 
+### Imágenes
+
+Usted también puede mostrar imágenes en su reporte de Rmarkdown, para esto usted deberá tener guardada la imagen que va a poner en el mismo sitio donde tiene guardado su archivo .Rmd, para adjuntarla en su informe deberá indicar el título de la imagen para el informe y el nombre de la imágen a poner, esto por medio de la siguiente estructura. 
+
+\!\[Titulo de la imagen para el informe](imagen.png)
+
 ### Titulos y subtitulos
 
-Para agregar un título utilice el símbolo # al principio de título, para agregar subtítulos utilice ## al principio del subtítulo, al agregar # va a ir agregando secciones y subsecciones
+Para agregar un título utilice el símbolo # al principio de título, para agregar subtítulos utilice ## al principio del subtítulo, al agregar # va a ir agregando secciones y subsecciones.
 
 # Esto es un H1 - 1 signo \#
 
@@ -152,6 +189,4 @@ Para agregar un título utilice el símbolo # al principio de título, para agre
 ##### Esto es un H5 - 5 signos \#
 
 
-**NOTA ACLARATORIA**: Esta guía aún se encuentra en construcción, no es la versión final, razón por la cual está sujeta a modificaciones.
 
-**Esta guía es exclusivamente para uso pedagógico**
