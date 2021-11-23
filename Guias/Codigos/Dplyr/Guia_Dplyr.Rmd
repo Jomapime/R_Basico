@@ -1,11 +1,12 @@
 ---
-title: "Guia Dplyr"
-author: "Jose Manuel Pinzon / Laboratorio Fintrade"
-date: "4/10/2021"
-output: pdf_document
+output: 
+  pdf_document:
+    includes:
+      before_body: Portada_Dp.tex
 lang: es-MX
 toc: TRUE
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -13,6 +14,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 \pagebreak
 
+**NOTA ACLARATORIA**: Esta guía aún se encuentra en construcción, no es la versión final, razón por la cual está sujeta a modificaciones. **Esta guía es exclusivamente para uso pedagógico**
 
 ## Paquete Dplyr
 
@@ -137,36 +139,73 @@ El comando **select()** permite eliminar o extraer las variables especificadas d
 Para seleccionar las columnas que se quieren trabajar simplemente tiene que mencionarlas separandolas por comas, observe los siguientes códigos y sus resultados.
 
 ```{r}
-
 ## Forma 1
 base_1 <- select(COVID, location,date,new_cases) #Primero la base de datos COVID, luego las columnas.
-head(base_1,2) #Resultado
+```
 
+```{r, eval=FALSE}
+head(base_1,2) #Resultado.
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(kableExtra)
+knitr::kable(head(base_1,2), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+
+```{r}
 ## Forma 2
 base_1= COVID %>% #Base de datos.
   select(location,date,new_deaths,total_deaths,population)#Función y columnas
+```
+
+```{r, eval=FALSE}
 head(base_1,2) #Resultado.
 ```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(base_1,2), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
 
 ### Eliminar columnas.
 
 Si usted desea eliminar algunas columnas el procedimiento es practicamente el mismo al anterior, con la única diferencia es que para este caso se debe agregar el símbolo menos (-) antes de las variables o columnas a eliminar.
 
 ```{r}
-
 ## Forma 1
 
 base_2 <- select(COVID, -date, -new_cases, -new_deaths, -biweekly_cases, -biweekly_deaths,
                  -countriesAndTerritories, -population_year, -continent ) 
-head(base_2,2) #Resultado
+```
+
+```{r, eval=FALSE}
+head(base_2,2) #Resultado.
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(base_2,2), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
 
 
 ## Forma 2
 
+```{r}
 base_2 <- COVID%>%
   select(-total_cases, -new_cases, -new_deaths, -biweekly_cases, -biweekly_deaths,
          -weekly_cases, -weekly_deaths, -population_year, -countriesAndTerritories)
-head(base_2,2) #Resultado
+```
+
+```{r, eval=FALSE}
+head(base_2,2) #Resultado.
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(base_2,2), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 \pagebreak
@@ -191,17 +230,31 @@ COVID %>%
 
 Este comando es similar a distinct, con la diferencia de que este cuenta el número de veces que se repite esa observación.
 
-```{r}
+```{r, eval=FALSE}
 #Forma 1
 tail(count(COVID, location),3)
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(tail(count(COVID, location),3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
 
+```{r}
 #Forma 2
 N_Paises <- COVID%>%
   count(location)
-
-head(N_Paises,3)
 ```
+
+```{r, eval=FALSE}
+head(N_Paises,3) #Resultado.
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(N_Paises,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
 
 \pagebreak
 
@@ -222,17 +275,32 @@ A continuación encontrará ejemplos en donde se ordenará el DataFrame dependie
 #Forma 1 - Sin usar pipe. Variable new_cases de menor a mayor.
 
 arrange_1 <-arrange(select(COVID,location,date,new_cases,total_cases), new_cases)
+```
 
-head(arrange_1,4)
+```{r, eval=FALSE}
+head(arrange_1,4) #Primeras 4 observaciones.
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(arrange_1,4), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
 #Forma 2 - Usando pipe. Variable new_cases de mayor a menor.
 
 arrange_2 <- COVID%>%
        select(location,date,new_cases,total_cases)%>%
        arrange(-new_cases)
+```
 
-head(arrange_2,4)
+```{r, eval=FALSE}
+head(arrange_2,4) #Primeras 4 observaciones.
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(arrange_2,4), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 En caso de que haya un empate, es decir, observaciones con un mismo valor, usted puede definir otra variable para hacer el "Desempate" y que se ordene según la otra variable que se definió. Para ello simplemente escriba el nombre de la columna del desempate como tercer argumento para la forma 1 o como segundo argumento de la forma 2 de la función **arrange.**
@@ -249,14 +317,31 @@ En el siguiente ejemplo se ordenará el DF dependiendo de la variable _location_
 ```{r}
 #Forma 1. Sin usar pipe. Ordenando con las variables location y new_deaths.
 Alfa <- arrange(select(COVID,location,date,new_deaths,total_deaths), location, -new_deaths)
+```
 
+```{r, eval=FALSE}
 head(Alfa,4)
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Alfa,4), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
 #Forma 2. Usando pipe. Ordenando con las variables location y new_deaths
 Alfa2 <- COVID %>%
   select(location,date,new_deaths,total_deaths)%>%
   arrange(location,-new_deaths)
+```
+
+```{r, eval=FALSE}
 head(Alfa2,4)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Alfa,4), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 \pagebreak
@@ -505,3 +590,13 @@ COVID %>%
 10. Haga un código que filtre la información de los continentes Africa, Asia y Europa, luego determine el promedio de nuevos casos para cada uno de los continentes y luego ordénelo de mayor a menor según ese promedio.
 11. Investigue que hacen las fuciones _sample_n_ y _sample_frac_.
 
+
+```{r}
+COVID%>%
+  filter(continent %in% c("Africa", "Asia", "Europe"))%>%
+  group_by(continent)%>%
+  summarise(Promedio = mean(na.omit(new_cases)))%>%
+  arrange(-Promedio)
+
+
+```
