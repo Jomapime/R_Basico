@@ -1,18 +1,18 @@
 ---
-title: "Guia primeros pasos en R"
-author: "Jose Manuel Pinzon / Laboratorio Fintrade"
-date: "15/9/2021"
-output: pdf_document
+output: 
+  pdf_document:
+    includes:
+      before_body: Portada_Pp.tex
 lang: es-MX
 toc: TRUE
 ---
+
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
 \pagebreak
-
 
 **NOTA ACLARATORIA**: Esta guía aún se encuentra en construcción, no es la versión final, razón por la cual está sujeta a modificaciones.
 
@@ -378,7 +378,7 @@ Se ha visto que un dataframe se crea de manera implicita con la funcion read.tab
 
 ### Crear dataframes.
 
-Un DataFrame puede ser creado uniendo vectores. A continuación se crearán dos vectores y luego se van a unir con la función **data.frame**. Y se utilizará la función class para verificar que el objeto creado es un DataFrame.
+Un DataFrame puede ser creado uniendo vectores. A continuación se crearán dos vectores y luego se van a unir con la función **data.frame**. Se utilizará la función class para verificar que el objeto es un DataFrame y posteriormente se imprimirá el Dataframe creado.
 
 ```{r}
 entero <- c(1:7)
@@ -386,6 +386,18 @@ decimal <- c(1.2,2.5,3.2,4.5,5.6,5,3.4)
 caracter <- c("Juan","Jose","Laura","Valentina","Valentina","Valentina", "Juana")
 mi_df <- data.frame(entero,decimal,caracter)
 class(mi_df)
+```
+
+```{r, eval=FALSE}
+mi_df
+```
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(kableExtra)
+knitr::kable(mi_df, "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+
 ```
 
 ### Caracteristicas del DataFrame
@@ -428,7 +440,17 @@ Para agregar el vector al dataframe: Lo primero es llamar al DF, luego se pondr�
 Ciudades <- c("Bogota","Medellin","Cartagena", "Cali", "Leticia", "Pereira", "Barranquilla")
 ## Agregar al DF
 mi_df$CIUDADES <- Ciudades
+```
+
+A continuación se mostrará el Dataframe con su modificación en la columna CIUDADES.
+
+```{r, eval=FALSE}
 mi_df
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(mi_df, "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 
@@ -436,16 +458,35 @@ mi_df
 
 Para cambiar el nombre de las columnas se emplea el codigo **names** de la siguiente manera.
 
-
 ```{r}
 ## Cambiar todos los nombres de las columnas.
 names(mi_df) = c("Columna1","Columna2","Columna3","Columna4")
-mi_df
-## Cambiar el nombre de alguna columna en específico.
-names(mi_df)[1] = "Entero"
+```
+
+```{r, eval=FALSE}
 mi_df
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(mi_df, "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
+## Cambiar el nombre de alguna columna en específico.
+names(mi_df)[1] = "ENTERO"
+names(mi_df)[2] = "DECIMAL"
+names(mi_df)[3] = "NOMBRE"
+```
+
+```{r, eval=FALSE}
+mi_df
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(mi_df, "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
 
 
 ### Indexacion
@@ -481,13 +522,31 @@ datasets::
 
 ```{r}
 #Para guardarlo en el entorno
+data("airquality") #Se guarda el objeto airquality
 
-data("airquality")
-head(airquality,3)
+```
 
-base <- datasets::iris
-head(base,3)
+```{r, eval=FALSE}
+head(airquality,3) # Se imprimen las 3 primeras observaciones.
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(airquality,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+
+```{r}
+base <- datasets::iris #Se guarda el DF iris bajo el nombre base.
+```
+
+```{r, eval=FALSE}
+head(base,3) #Se imprimen las 3 primeras observaciones.
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(base,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 
@@ -503,7 +562,15 @@ Para obtener los datos se usa la función **getsymbols**, el primer argumento se
 library(quantmod) ## Se llama a la librería
 
 getSymbols("AAPL",src = "yahoo", periodicity = "daily", from = "2015/01/01")
-head(AAPL,3)
+```
+
+```{r, eval=FALSE}
+head(AAPL,3) #Se imprimen los 3 primeros valores de AAPL.
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(AAPL,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 
@@ -515,14 +582,14 @@ Para importar estos archivos debe dirigirse al entorno, allí encontrará una op
 
 Las dos primeras opciones, por lo general se usan para importar archivos **txt** y **csv**, la tercera opción es para importar archivos de excel o archivos **.xlsx**. 
 
-Para importar los archivos seleccione la opción correspondiente, a continuación le aparecerá una nueva ventana, mire la figura 6. Lo primero que debe hacer es darle al botón **Browse...**, luego deberá buscar y seleccionar lo archivo. Cuando lo haya seleccionado R le mostrará una vista previa de los datos del archivo. Cuando confirme que toda la información está correcta copie el código que aparece en la parte inferior derecha (Puede hacerlo dando click en el logo resaltado), le dará importar y por último, pegará el código copiado en su script de R
+Para importar los archivos seleccione la opción correspondiente, a continuación le aparecerá una nueva ventana, mire la figura 6. Lo primero que debe hacer es darle al botón **Browse...**, luego deberá buscar y seleccionar el archivo. Cuando lo haya seleccionado R le mostrará una vista previa de los datos del archivo. Cuando confirme que toda la información está correcta copie el código que aparece en la parte inferior derecha (Puede hacerlo dando click en el logo resaltado), de clic en importar y por últim, pegue en su script de R el código que copió.
 
 ![Menu Import Dataset.](Imp_Ex.JPG)
 
 
 ```{r}
 library(readxl)
-Departamentos <- read_excel("C:/Users/JosePinzon/Downloads/Departamentos.xlsx")
+Departamentos <- read_excel("~/Fintrade/R_Basico/Guias/Primeros_pasos/Departamentos.xlsx")
 head(Departamentos)
 ```
 
