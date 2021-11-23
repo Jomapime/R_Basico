@@ -1,16 +1,16 @@
 ---
-title: "Graficos basicos en R"
-author: "Jose Manuel Pinzon / Laboratorio Fintrade"
-date: "20/9/2021"
-output: pdf_document
+output: 
+  pdf_document:
+    includes:
+      before_body: Portada_Gb.tex
 lang: es-MX
 toc: TRUE
 ---
 
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-
 
 \pagebreak
 
@@ -55,8 +55,10 @@ Este archivo de excel cuenta con 935 observaciones y 12 variables, de las cuales
 ```{r}
 library(readxl)
 Wage2 <- read_excel("Wage2.xlsx") ##Importar archivo.
-str(Wage2) #Caracteristicas del archivo.
+str(Wage2) #Ver caracteristicas del archivo.
 ```
+
+
 ### Características de la base de datos.
 
 Al cargar la base de datos, se puede evidenciar que las variables categóricas también están definidas como tipo numerico. A continuación se va a ajustar el tipo de dato a **Factor**
@@ -72,10 +74,21 @@ str(Wage2) #Caracteristicas DF
 
 El comando **summary** le va a dar un breve resumen estadistico para las variables cuantitativas, en donde encontrará el valor mínimo, máximo, la media y resumen de los 5 Números para cada variable del DataFrame. Si usted tiene variables categoricas marcadas como factor le hará un conteo de los datos de esa variable.
 
-```{r}
+```{r, eval=FALSE}
 summary(Wage2) #Resumen DF
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(kableExtra)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(summary(Wage2[,c(1:4)]), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+knitr::kable(summary(Wage2[,c(5:8)]), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
 
 
 Por último se va a fijar la base de datos con el comando **attach**, con este comando se indica que todas las variables que se van a trabajar se encuentran en esta base de datos.
@@ -94,7 +107,7 @@ Por lo general los graficos son muy sencillos de hacer, con el comando normal se
 - **main:** Permite cambiar el titulo del gráfico.
 - **col:** Este argumento permite poner colores en el gráfico.
 - **ylim:** Se usa para modiicar los limites o rangos del eje Y.
-- **ylim:** Se usa para modiicar los limites o rangos del eje X.
+- **xlim:** Se usa para modiicar los limites o rangos del eje X.
 
 Mas adelante los pondremos en practica.
 
@@ -425,7 +438,7 @@ par(new = T)
 plot(rep(1,10), type = "p", col = "Orange")
 ```
 
-De esta forma, ya están sobrepuestos los 4 gráficos, cada uno con argumento _type_ diferente, sin embargo, note que tanto los nombres de los ejes como los rangos numéricos están desordenados, ya que cada gráfico adopta su propio rango numérico para los ejes, al igual que los nombres o etiquetas de estos. Para corregirlo puede indicar en cada gráfico un rango numérico específico para los ejes, también puede asignar o quitar las etiquetas o nombres de los ejes. Detalle el siguiente código y observe el gráfico resultante.
+De esta forma, ya están sobrepuestos los 4 gráficos, cada uno con argumento _type_ diferente, sin embargo, note que tanto los nombres de los ejes como los rangos numéricos están desordenados, ya que cada gráfico adopta su propio rango numérico para los ejes, al igual que los nombres o etiquetas de estos. Para corregirlo puede indicar en cada gráfico un rango numérico específico para los ejes, también puede asignar o quitar las etiquetas o nombres de los ejes. Detalle el siguiente código, los argumentos **xlim** y **ylim** son iguales para cada uno de los graficos. Observe la figura resultante.
 
 
 ```{r,fig.width=5, fig.height=4, fig.align = "center"}
