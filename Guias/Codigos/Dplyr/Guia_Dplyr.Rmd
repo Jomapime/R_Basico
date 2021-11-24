@@ -144,12 +144,12 @@ base_1 <- select(COVID, location,date,new_cases) #Primero la base de datos COVID
 ```
 
 ```{r, eval=FALSE}
-head(base_1,2) #Resultado.
+head(base_1,4) #Resultado.
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(kableExtra)
-knitr::kable(head(base_1,2), "latex", booktabs = T)%>%
+knitr::kable(head(base_1,4), "latex", booktabs = T)%>%
   kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
@@ -161,11 +161,11 @@ base_1= COVID %>% #Base de datos.
 ```
 
 ```{r, eval=FALSE}
-head(base_1,2) #Resultado.
+head(base_1,4) #Resultado.
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(head(base_1,2), "latex", booktabs = T)%>%
+knitr::kable(head(base_1,4), "latex", booktabs = T)%>%
   kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
@@ -182,29 +182,29 @@ base_2 <- select(COVID, -date, -new_cases, -new_deaths, -biweekly_cases, -biweek
 ```
 
 ```{r, eval=FALSE}
-head(base_2,2) #Resultado.
+head(base_2,4) #Resultado.
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(head(base_2,2), "latex", booktabs = T)%>%
+knitr::kable(head(base_2,4), "latex", booktabs = T)%>%
   kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 
+```{r}
 ## Forma 2
 
-```{r}
 base_2 <- COVID%>%
   select(-total_cases, -new_cases, -new_deaths, -biweekly_cases, -biweekly_deaths,
          -weekly_cases, -weekly_deaths, -population_year, -countriesAndTerritories)
 ```
 
 ```{r, eval=FALSE}
-head(base_2,2) #Resultado.
+head(base_2,4) #Resultado.
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(head(base_2,2), "latex", booktabs = T)%>%
+knitr::kable(head(base_2,4), "latex", booktabs = T)%>%
   kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
@@ -214,17 +214,26 @@ knitr::kable(head(base_2,2), "latex", booktabs = T)%>%
 
 La función distinct permite identificar cuales son los valores u observaciones con los que cuenta cada variable. Para hacer uso de esta solo necesita especificar la base de datos y la variable.
 
-```{r}
+```{r, eval=FALSE}
 #Forma 1
 distinct(COVID, continent)
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(distinct(COVID, continent), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r, eval=FALSE}
 #Forma2
 COVID %>%
   distinct(continent)
-
 ```
 
-
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(distinct(COVID, continent), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
 
 ## count.
 
@@ -372,15 +381,34 @@ Con el fin de que los resultados se impriman de una manera más agradable para e
 ##Forma 1
 
 Colombia <- filter(select(COVID,location,date,total_cases),location == "Colombia") 
-head(Colombia,3)
+```
 
+```{r, eval=FALSE}
+head(Colombia,3)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Colombia,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
 ##Forma 2
 
 Colombia2 <- COVID%>%
   select(location, date, total_cases)%>%
   filter(location == "Germany") 
+```
+
+```{r, eval=FALSE}
 head(Colombia2,3)
 ```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Colombia2,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
 
 ### Filtro para una variable de tipo numérico. 
 
@@ -390,53 +418,106 @@ Ahora se mostrarán 2 ejemplos para casos numéricos. En primer lugar se hará u
 #Forma 1
 
 Fil_num <- filter(select(COVID,location,date,new_cases), new_cases > 18000)
-head(Fil_num)
+```
 
+```{r, eval=FALSE}
+head(Fil_num)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Fil_num), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+
+```{r}
 #Forma 2
 
 Fil_num2 <- COVID%>%
   select(location, date, new_cases)%>%
   filter(new_cases < 200)
+```
+
+```{r, eval=FALSE}
 head(Fil_num2,3)
 ```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Fil_num2,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
 
 ### Filtro con varias condiciones.
 
 En este comando se pueden filtrar por varias condiciones al tiempo, en estos casos se usa &(y) cuando se tienen que cumplir extrictamente todas las condiciones especificadas y |(o) cuando quiere filtrar las filas que cumplan con al menos criterio.
 
-#### Filtro con | (o)
+### Filtro con | (o)
 
 Para filtrar datos de una sola variable. Para los siguientes ejemplos se les agregará la función **distinct**, con el fin de que se visualice de mejor manera los datos que se han filtrado.
 
 ```{r}
 #Forma 1
-
 Paises1 <-select(filter(COVID, location %in% c("Colombia", "Vanuatu", "Belgium")),
                  location,date,new_cases) #Sin distinct
-head(Paises1,3)
+```
 
+```{r, eval=FALSE}
+head(Paises1,3)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Paises1,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+
+```{r}
 Paises1 <-distinct(select(filter(COVID, location %in% c("Colombia", "Vanuatu", "Belgium"))
                           ,location,date,new_cases),location) #Con distinct
-head(Paises1)
+```
+
+```{r, eval=FALSE}
+head(Paises1,3)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Paises1,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 Note cuando se agrega la función distinct se muestra que a nivel de la variable _location_ solo aparecen los países que se filtraron en el código.
 
 ```{r}
 # Forma 2
-
 Paises2 = COVID%>%
   select(location,date,new_cases,new_deaths,total_deaths,population)%>%
   filter(location == "Germany" | location == "Colombia" | location == "France")
-  
-head(Paises2,3)
+```
 
+```{r, eval =FALSE}
+head(Paises2)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Paises2), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
 Paises2 = COVID%>%
   select(location,date,new_cases,new_deaths,total_deaths,population)%>% 
   filter(location == "Germany" | location == "Colombia" | location == "France")%>%
   distinct(location)
-head(Paises2)
+```
 
+```{r, eval=FALSE}
+head(Paises2)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Paises2,3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 Ahora se van a filtrar datos de dos o más variables. Para el primer caso, se filtrará toda la información del país Andorra y toda la información existente para la fecha 2020-10-05. En el segundo caso se filtrará la información de Alemania, además los datos que tengan "South America" en la variable "continent".
@@ -445,20 +526,33 @@ Ahora se van a filtrar datos de dos o más variables. Para el primer caso, se fi
 
 ```{r}
 #Forma 1
-
 Andorra_Date <-select(filter(COVID, location == "Andorra" | date == "2020-10-05"),
                       location,date,new_cases)
+```
 
+```{r, eval=FALSE}
 head(Andorra_Date)
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Andorra_Date), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
 #Forma 2
-
 Alemania_Continent = COVID%>%
   filter(location == "Germany" | continent == "South America")%>% 
   select(location,date,new_deaths,total_deaths,continent)
+```
 
-head(Alemania_Continent,4)
+```{r, eval=FALSE}
+head(Alemania_Continent)
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Alemania_Continent), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 Note que para el ejemplo de Andorra se muestran solo una vez Afganistan, Albania y Algeria, por lo que solo hay una observación de esos países para la fecha especificada. Mientras que Andorra aparece varias veces porque se filtró toda la información de este país, sin importar su fecha.
@@ -471,8 +565,17 @@ Continent_dis = COVID%>%
   filter(location == "Germany" | continent == "South America")%>% 
   select(location,date,new_deaths,total_deaths,continent)%>%
   distinct(continent)
-print(Continent_dis)
 ```
+
+```{r, eval=FALSE}
+head(Continent_dis)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Continent_dis), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
 
 Observe que ahora solo hay 2 continentes, "South America" que fue el dato filtrado de la variable _continent_ y "Europe", que es el continente del país filtrado ("Germany"). 
 
@@ -491,14 +594,31 @@ A continuación se harán dos ejemplos, en el primero se van a filtrar los datos
 # Forma 1
 America2 <- select(filter(COVID,date == "2020-06-14" & continent == "Oceania"), location,
                    date,new_cases, new_deaths, population)
+```
+
+```{r, eval=FALSE}
 head(America2)
-           
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(America2), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
 # Forma2
 America3 <- COVID %>%
   filter(date == "2020-05-20" & continent == "South America" & new_cases >= 3000)%>% 
   select(location,date,new_cases, new_deaths, population)
-head(America3)
+```
 
+```{r, eval=FALSE}
+head(America3)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(America3), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
 
@@ -511,26 +631,39 @@ Ahora se explicará como computar tranformaciones de variables en un DataFrame p
 A continuación observará un ejemplo de como hacer uso de esta función, en donde se creará el porcentaje de la población que se ha contagiado de covid en cada país, para ello se dividirán el total de los casos _(_total_cases)_ por la población _(population)_. Luego de esto se seleccionarán algunas columnas con la función **select** y posteriormente se ordenará el DataFrame de mayor a menor con los datos de la variable _Nueva_V_.
 
 
-
-
 ```{r}
-
 ## Forma 1
 
 Porcentaje <- arrange(select(mutate(COVID, Nueva_V = (total_cases/population)*100), location,
                              date, total_cases, population, Nueva_V),-Nueva_V) 
-head(Porcentaje,3)
+```
 
+```{r, eval=FALSE}
+head(Porcentaje,7)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Porcentaje,7), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
+```{r}
 ## Forma 2
-
 Porcentaje <- COVID%>%
   mutate(Nueva_V = (total_cases/population)*100)%>%
   select(location, date, total_cases, population, Nueva_V)%>%
   arrange(-Nueva_V)
-head(Porcentaje,3)
-
-
 ```
+
+```{r, eval=FALSE}
+head(Porcentaje,7)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(Porcentaje,7), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
+
 
 Con el comando **mutate()** también se pueden encadenar la creación de varias variables en una misma sentencia o código. 
 
@@ -544,10 +677,16 @@ COVID_Ultimo_dia = COVID %>%
          Porcentaje2 = (total_deaths/total_cases)*100)%>%
   select(location,date,Porcentaje1,Porcentaje2)%>%
   arrange(-Porcentaje2)
-head(COVID_Ultimo_dia,3)
 ```
 
+```{r, eval=FALSE}
+head(COVID_Ultimo_dia,6)
+```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+knitr::kable(head(COVID_Ultimo_dia,6), "latex", booktabs = T)%>%
+  kable_styling(latex_options = c("HOLD_position", "striped"))
+```
 
 
 
@@ -571,7 +710,6 @@ COVID %>%
   group_by(continent) %>%
   summarize(media_continente =mean(na.omit(new_cases)),
             Varianza = var(na.omit(new_cases)))
-
 ```
 
 \pagebreak
@@ -591,12 +729,3 @@ COVID %>%
 11. Investigue que hacen las fuciones _sample_n_ y _sample_frac_.
 
 
-```{r}
-COVID%>%
-  filter(continent %in% c("Africa", "Asia", "Europe"))%>%
-  group_by(continent)%>%
-  summarise(Promedio = mean(na.omit(new_cases)))%>%
-  arrange(-Promedio)
-
-
-```
