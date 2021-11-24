@@ -214,24 +214,32 @@ knitr::kable(head(base_2,4), "latex", booktabs = T)%>%
 
 La función distinct permite identificar cuales son los valores u observaciones con los que cuenta cada variable. Para hacer uso de esta solo necesita especificar la base de datos y la variable.
 
-```{r, eval=FALSE}
+```{r}
 #Forma 1
-distinct(COVID, continent)
+dis1 <- distinct(COVID, continent)
+```
+
+```{r, eval=FALSE}
+head(dis1,3)
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(distinct(COVID, continent), "latex", booktabs = T)%>%
+knitr::kable(head(dis1,3), "latex", booktabs = T)%>%
   kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
-```{r, eval=FALSE}
+```{r}
 #Forma2
-COVID %>%
+dis2 <- COVID %>%
   distinct(continent)
 ```
 
+```{r, eval=FALSE}
+tail(dis2,3)
+```
+
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
-knitr::kable(distinct(COVID, continent), "latex", booktabs = T)%>%
+knitr::kable(tail(dis2,3), "latex", booktabs = T)%>%
   kable_styling(latex_options = c("HOLD_position", "striped"))
 ```
 
